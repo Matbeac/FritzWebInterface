@@ -27,7 +27,7 @@ if uploadFile is not None:
     X=X.tolist()
     X_json=json.dumps(X)
     # Call the POST
-    url = "http://127.0.0.1:8000/items/"
+    url = "http://127.0.0.1:8000/predict/"
     
     data=json.dumps({"image_reshape":X_json,
                      "height": img.shape[0],
@@ -36,8 +36,9 @@ if uploadFile is not None:
     
     headers = {'Content-type': 'application/json'}
     response = requests.post(url,data,headers=headers).json()
+    
     st.write(response)
-
+    
 else:
     st.write("Make sure you image is in JPG/PNG Format.")
     
