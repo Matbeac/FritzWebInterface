@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 import collections
-from keys import get_api_key
+from Recipe_API.keys import *
 
 # key API
 api_key = get_api_key()
