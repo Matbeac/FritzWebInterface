@@ -4,6 +4,8 @@ import numpy as np
 import streamlit as st 
 import requests
 import json
+from Recipe_API.utils import *
+from Emission_computing.emission_preprocessing import *
 
 # Function to Read and Convert Images
 def load_image(img):
@@ -19,8 +21,8 @@ if uploadFile is not None:
     # Perform  Manipulations 
     img = load_image(uploadFile)
     st.image(img)
-    st.write(img)
-    st.write("Image Uploaded Successfully")
+    # st.write(img)
+    st.write("📸 Image Uploaded Successfully !")
     
     # Reshape the image
     X = img.reshape(img.shape[0]*img.shape[1]*img.shape[2])
@@ -36,9 +38,18 @@ if uploadFile is not None:
     
     headers = {'Content-type': 'application/json'}
     response = requests.post(url,data,headers=headers).json()
-    
-    st.write(response)
-    
+    response = response.replace("_", " ")
+    st.write(f"FRITZ thinks the recipe is a {response}")
+    st.write("FRITZ is finding the ingredients")
+    st.write(create_ingredients_dict(response,"breakfast"))
+
+
+    # Try packaging
+    output_dict=create_ingredients_dict(response,"breakfast")
+    output_df=fill_empties(output_dict)
+    st.write('OK fill empty')
+    final_df, missing_ingredients=match_ingredients(output_df)
+    st.write(convert(final_df))
 else:
     st.write("Make sure you image is in JPG/PNG Format.")
     
