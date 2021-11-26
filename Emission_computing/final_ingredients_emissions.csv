@@ -2,36 +2,47 @@ ingredient,emissions
 allspice,1133
 almond extract,656
 almonds,2856
-anchovies,4220
+anchovy,4220
 apple juice,2440
 apple sauce,2146
+applesauce,2146
 apples,900
 apricot,430
 artichoke,338
 asparagus,7032
 aubergine,3095
 avocados,2400
+guacamole,2400
 bacon,6628
 bagel,1215
 baguette,1301
 baked beans,2467
+baking soda,0
 bananas,1300
 barbeque sauce,222
 barley,1118
 basil,1133
-bay leaves,1133
+bay leaf,1133
 beef,43330
+chuck,43330
+sirloin,43330
+oxtail,43330
+standing rib roast,43330
 beer,876
 beetroot,1136
 berries,2860
 biscuits,1303
 black beans,852
 black pepper,1133
+red pepper,1133
 black tea,605
 brandy,2320
 bread,1215
+loaf,1215
+sponge fingers,1215
 bread crumbs,1215
 bread roll,1215
+hamburger bun,1215
 broccoli,1081
 brussels sprouts,750
 buckwheat,718
@@ -49,32 +60,37 @@ cauliflower,971
 cayenne pepper,1133
 celery,844
 cheese,8787
-cheese - brie,7417
-cheese - camambert,7111
-cheese - cheddar,7417
-cheese - cottage,2445
-cheese - cream,6440
-cheese - edam,7111
-cheese - emmental,7111
-cheese - feta,7111
-cheese - goats,7111
-cheese - gouda,7417
-cheese - mascarpone,7417
-cheese - mascarpone,7417
-cheese - paneer,7111
-cheese - parmesan,7111
-cheese - prato,7417
-cheese - quark,2445
-cheese - stilton,7417
+brie,7417
+camambert,7111
+cheddar,7417
+cottage,2445
+cream cheese,6440
+cream cheese frosting,6440
+edam,7111
+emmental,7111
+feta,7111
+goats,7111
+gouda,7417
+mascarpone,7417
+paneer,7111
+parmesan,7111
+prato,7417
+quark,2445
+stilton,7417
+curd,2445
 cheesecake,5482
 cherries,2860
 cherries - frozen,2520
 chestnuts,1460
 chia seeds,4200
 chickpeas,852
+chili,2019
+jalapeño,2019
 chilli flakes,1133
 chilli pepper,2019
 chilli powder,1133
+chile powder,1133
+chile paste,1535
 chips,3822
 chives,1133
 chocolate,5763
@@ -95,9 +111,13 @@ cod,3214
 coffee beans,4500
 coley,4362
 coriander,1133
+cilantro,1133
 corn,405
 corn crisps,1325
 corn oil,1199
+cornstarch,891
+cornflour,891
+tacos,1081
 cottonseed oil,2140
 courgette,861
 couscous,2440
@@ -117,7 +137,7 @@ currants,2100
 custard,2454
 date,2100
 dill,1133
-doughnut,6579
+donut,6579
 dried peas (shelled),2388
 duck,5054
 eel,4220
@@ -140,7 +160,7 @@ food colouring,656
 frozen pulses,1834
 fruit cordial,1927
 fruit juice,1711
-fruit pie,1578
+pie filling,1578
 fruit tea,605
 fudge,2412
 gammon,6628
@@ -164,6 +184,7 @@ haddock,4362
 hake,4362
 halibut,4362
 ham,6628
+spam,6628
 haricot beans,852
 hazelnut paste,1266
 hazelnut spread,2710
@@ -176,7 +197,6 @@ honey,1657
 hot chocolate,2727
 hummus,852
 ice cream,3802
-icing - to roll,656
 instant coffee,706
 jam,2146
 jasmin tea,605
@@ -194,6 +214,7 @@ lemon sole,4362
 lemons,1900
 lentils,670
 lettuce,2063
+iceberg,2063
 lime,1900
 lime juice,622
 liquorice,2412
@@ -212,15 +233,17 @@ mayonnaise,4030
 meatless,2290
 melons,900
 milk,1762
-milk - buffalo,3380
-milk - concentrated,3100
-milk - goats,2670
-milk - plant-based,545
-milk - sheeps,8400
-milk - soy,782
+buffalo milk,3380
+condensed milk,3100
+dulce de leche,3100
+goats milk,2670
+plant milk-based,545
+sheeps milk,8400
+soy milk,782
 mint,1133
 mints,2412
 mirin,222
+hoisin sauce,222
 miso paste,222
 mixed nuts,2056
 mixed seeds,2978
@@ -276,7 +299,10 @@ parsley,1133
 parsnips,678
 passata,1959
 pasta,1374
+cheese ravioli,4534
 pastry,6579
+wrappers,4138
+dough,6579
 peaches,1900
 peaches - canned,2900
 peanut,1360
@@ -284,7 +310,6 @@ peanut butter,2107
 peanut oil,3637
 pears,1028
 peas,4228
-peas,2324
 pecan,2129
 peppermint extract,656
 peppers,2019
@@ -301,10 +326,12 @@ plant-based spread,3081
 plums,1125
 prunes,4440
 polenta,760
+grits,760
 pollock,3214
 pork,6628
 porridge,3958
 potatoes,1273
+gnocchi,1273
 prawn,17746
 pumpkin seeds,4200
 quinoa,816
@@ -326,6 +353,7 @@ relish,1656
 rhubarb,844
 rice,1354
 rocket,1609
+arugula,1609
 rosemary,1133
 rum,2320
 sage,1133
@@ -335,6 +363,7 @@ salad leaves,1609
 salmon,4787
 salt,1133
 sausage,6628
+chorizo,6628
 sardines,4220
 scallops,3036
 scones,3064
@@ -349,21 +378,25 @@ shrimp,17746
 snack bar - chocolate,5070
 snack bar - muesli,6840
 soft drink,622
-soft drink,622
 soy sauce,222
+shoyu,222
 soybean oil,1583
 soybeans,2000
+edamame,2000
 spagheti bolognese - ready meal,11667
 spaghetti,1374
 spinach,1457
 spinach - canned,1787
 spinach - frozen,1571
 spring onion,1051
+scallions,1051
 squash,1162
 squid,3036
+calamari,3036
 steak,43330
 stir fry sauce,222
 stock,222
+dashi,222
 strawberries,2243
 strawerries - frozen,2334
 sugar,656
@@ -380,6 +413,7 @@ sweets - milk-based,4210
 tagliatelle,1374
 tahini,852
 tamari,222
+tarragon,1374
 tapioca starch,594
 tea - with milk,631
 tempeh,1093
@@ -387,7 +421,8 @@ tequila,2320
 thyme,1133
 toffee,2412
 tomatoes,2905
-tortilla wrap,1081
+tomato pureé,4749
+tortilla,1081
 treacle,656
 trout,4220
 tuna,10165
@@ -407,5 +442,12 @@ wheat,718
 whiskey,2320
 whiting,4362
 wine,1369
+sauvignon blanc,1369
+sake,1369
 worcestershire sauce,222
 yogurt,2200
+snails,732
+escargot,732
+yeast,0
+yuzu,1100
+tabasco sauce,222
