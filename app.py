@@ -17,8 +17,16 @@ def load_resize_image(img):
     image = np.array(image)
     return image
 
+# Title
+st.markdown("""
+    # 🥙 FRITZ
+
+    ## The first Meal Carbon Footprint Calculator powered by Deep Learning
+""")
+st.markdown("""Did you know that you **save more water** by **not eating** a steak than you would by **not showering** for **one month** ?""")
+
 # Uploading the Image to the Page
-uploadFile = st.file_uploader(label="Upload image", type=['jpg', 'png'])
+uploadFile = st.file_uploader(label="🥘Upload image", type=['jpg', 'png'])
 
 # Checking the Format of the page
 if uploadFile is not None:
