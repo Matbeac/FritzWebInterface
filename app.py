@@ -36,9 +36,6 @@ if uploadFile is not None:
     
     # Call the POST
     url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
-    # test_url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app"
-    # test_resp = requests.get(test_url).json()
-    # st.write(test_resp)
     
     
     
@@ -48,10 +45,8 @@ if uploadFile is not None:
                      "color": img.shape[2]})
     headers = {'Content-type': 'application/json'}
     
-    response = requests.post(url,data,headers=headers)
-    st.write(response)
-    st.write(response.content)
-    # response = response.replace("_", " ")
+    response = requests.post(url,data,headers=headers).json()
+    response = response.replace("_", " ")
     st.write(f"FRITZ thinks the recipe is a {response}")
     st.write("FRITZ is finding the ingredients")
     st.write(getingredients(response))
