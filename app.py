@@ -51,7 +51,7 @@ if uploadFile is not None:
     response = requests.post(url,data,headers=headers)
     st.write(response)
     st.write(response.content)
-    response = response.replace("_", " ")
+    # response = response.replace("_", " ")
     st.write(f"FRITZ thinks the recipe is a {response}")
     st.write("FRITZ is finding the ingredients")
     st.write(getingredients(response))
