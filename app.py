@@ -11,9 +11,10 @@ import nltk
 from nltk.stem import WordNetLemmatizer 
 
 # Function to Read and Convert Images
-def load_image(img):
+def load_resize_image(img):
     im = Image.open(img)
-    image = np.array(im)
+    image = im.resize((224,224)) 
+    image = np.array(image)
     return image
 
 # Uploading the Image to the Page
@@ -22,25 +23,34 @@ uploadFile = st.file_uploader(label="Upload image", type=['jpg', 'png'])
 # Checking the Format of the page
 if uploadFile is not None:
     # Perform  Manipulations 
-    img = load_image(uploadFile)
+    img = load_resize_image(uploadFile)
     st.image(img)
     # st.write(img)
     st.write("📸 Image Uploaded Successfully !")
     
     # Reshape the image
+    
     X = img.reshape(img.shape[0]*img.shape[1]*img.shape[2])
     X=X.tolist()
     X_json=json.dumps(X)
+    
     # Call the POST
-    url = "http://127.0.0.1:8000/predict/"
+    url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
+    # test_url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app"
+    # test_resp = requests.get(test_url).json()
+    # st.write(test_resp)
+    
+    
     
     data=json.dumps({"image_reshape":X_json,
                      "height": img.shape[0],
                      "width": img.shape[1],
                      "color": img.shape[2]})
-    
     headers = {'Content-type': 'application/json'}
-    response = requests.post(url,data,headers=headers).json()
+    
+    response = requests.post(url,data,headers=headers)
+    st.write(response)
+    st.write(response.content)
     response = response.replace("_", " ")
     st.write(f"FRITZ thinks the recipe is a {response}")
     st.write("FRITZ is finding the ingredients")
