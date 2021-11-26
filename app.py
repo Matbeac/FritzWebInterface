@@ -6,6 +6,7 @@ import requests
 import json
 from Recipe_API.utils import *
 from Emission_computing.emission_preprocessing import *
+from Edamam_api import *
 
 # Function to Read and Convert Images
 def load_image(img):
@@ -41,14 +42,15 @@ if uploadFile is not None:
     response = response.replace("_", " ")
     st.write(f"FRITZ thinks the recipe is a {response}")
     st.write("FRITZ is finding the ingredients")
-    st.write(create_ingredients_dict(response,"breakfast"))
+    st.write(getingredients(response))
 
 
     # Try packaging
-    output_dict=create_ingredients_dict(response,"breakfast")
+    output_dict=getingredients(response)
     output_df=fill_empties(output_dict)
-    st.write('OK fill empty')
+    st.write(fill_empties(output_dict))
     final_df, missing_ingredients=match_ingredients(output_df)
+    st.write(final_df, missing_ingredients)
     st.write(convert(final_df))
 else:
     st.write("Make sure you image is in JPG/PNG Format.")

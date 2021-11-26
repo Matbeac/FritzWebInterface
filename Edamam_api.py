@@ -15,7 +15,7 @@ def get_recipe(dish):
 
     return recipe
 
-def get_ingredients(dish):
+def getingredients(dish):
 
     #get ingredients from the call
     recipe = get_recipe(dish)
@@ -30,3 +30,5 @@ def get_ingredients(dish):
         new_dict["metric"].append(i['measure'])
 
     return new_dict
+if __name__=="__main__":
+    print(getingredients("ceviche"))
