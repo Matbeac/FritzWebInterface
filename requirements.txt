@@ -3,6 +3,5 @@ nltk
 Pillow
 pandas
 numpy
-jsonlib
 requests
 collection
