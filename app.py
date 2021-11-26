@@ -56,18 +56,22 @@ if uploadFile is not None:
     
     response = requests.post(url,data,headers=headers).json()
     response = response.replace("_", " ")
-    st.write(f"FRITZ thinks the recipe is a {response}")
+    st.write("FRITZ is identifying the recipe")
+    st.write(f"FRITZ thinks the recipe is a **{response}**")
     st.write("FRITZ is finding the ingredients")
-    st.write(getingredients(response))
+    # st.write(getingredients(response))
 
 
     # Try packaging
     output_dict=getingredients(response)
     output_df=fill_empties(output_dict)
-    st.write(fill_empties(output_dict))
+    # st.write(fill_empties(output_dict))
     final_df, missing_ingredients=match_ingredients(output_df)
-    st.write(final_df, missing_ingredients)
-    st.write(convert(final_df))
+    # st.write(final_df, missing_ingredients)
+    # st.write(convert(final_df))
+    final_result=final_df["calculated gCO2"].sum()
+    st.write(f"1 portion of this {response} emits {final_result} grams of C02")
+
 else:
     st.write("Make sure you image is in JPG/PNG Format.")
     
