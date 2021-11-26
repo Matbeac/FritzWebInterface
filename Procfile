@@ -1,1 +1,1 @@
-web: pip install . -U && fritzli-run
+web: pip install . -U && FritzWebInterface-run
