@@ -1,0 +1,8 @@
+streamlit
+requests
+numpy
+json
+nltk
+collections
+os
+re
