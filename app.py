@@ -7,6 +7,8 @@ import json
 from Recipe_API.utils import *
 from Emission_computing.emission_preprocessing import *
 from Edamam_api import *
+import nltk
+from nltk.stem import WordNetLemmatizer 
 
 # Function to Read and Convert Images
 def load_image(img):
