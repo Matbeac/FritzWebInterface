@@ -68,8 +68,7 @@ if uploadFile is not None:
     # st.write(fill_empties(output_dict))
     final_df, missing_ingredients=match_ingredients(output_df)
     # st.write(final_df, missing_ingredients)
-    # st.write(convert(final_df))
-    final_result=final_df["calculated gCO2"].sum()
+    final_result=convert(final_df)["calculated gCO2"].sum()
     st.write(f"1 portion of this {response} emits {final_result} grams of C02")
 
 else:
