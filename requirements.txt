@@ -1,7 +1,1 @@
 streamlit
-requests
-numpy
-nltk
-collections
-os
-re
