@@ -9,6 +9,7 @@ from Emission_computing.emission_preprocessing import *
 from Edamam_api import *
 import nltk
 from nltk.stem import WordNetLemmatizer 
+nltk.download('wordnet')
 
 # Function to Read and Convert Images
 def load_resize_image(img):
