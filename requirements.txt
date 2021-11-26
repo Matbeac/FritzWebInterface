@@ -1,9 +1,8 @@
 streamlit
 nltk
-PIL
+Pillow
 pandas
 numpy
-json
+jsonlib
 requests
-collections
-re
+collection
