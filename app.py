@@ -36,7 +36,8 @@ if uploadFile is not None:
     st.image(img)
     # st.write(img)
     st.write("📸 Image Uploaded Successfully !")
-    
+    st.write("🧠Wait a minute, FRITZ is identifying the recipe")
+
     # Reshape the image
     
     X = img.reshape(img.shape[0]*img.shape[1]*img.shape[2])
@@ -56,9 +57,8 @@ if uploadFile is not None:
     
     response = requests.post(url,data,headers=headers).json()
     response = response.replace("_", " ")
-    st.write("FRITZ is identifying the recipe")
     st.write(f"FRITZ thinks the recipe is a **{response}**")
-    st.write("FRITZ is finding the ingredients")
+    st.write("🦑FRITZ is finding the ingredients")
     # st.write(getingredients(response))
 
 
@@ -68,7 +68,7 @@ if uploadFile is not None:
     # st.write(fill_empties(output_dict))
     final_df, missing_ingredients=match_ingredients(output_df)
     # st.write(final_df, missing_ingredients)
-    final_result=convert(final_df)["calculated gCO2"].sum()
+    final_result=convert(final_df)["calculated gCO2e"].sum()
     st.write(f"1 portion of this {response} emits {final_result} grams of C02")
 
 else:
