@@ -5,10 +5,12 @@ import streamlit as st
 import requests
 import json
 from Recipe_API.utils import *
+from Recipe_API.keys import *
 from Emission_computing.emission_preprocessing import *
 from Edamam_api import *
 import nltk
 from nltk.stem import WordNetLemmatizer 
+
 nltk.download('wordnet')
 
 # Function to Read and Convert Images
