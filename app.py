@@ -20,12 +20,12 @@ def load_resize_image(img):
     image = np.array(image)
     return image
 
-url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
-# url="http://127.0.0.1:8000/predict"
+# url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
+url="http://127.0.0.1:8000/predict"
 
-# Loading the model
+# CACHE :Loading the model
 response = requests.get(url).json()
-st.write('model loaded')
+
 # Title
 st.markdown("""
     # 🥙 FRITZ
@@ -39,26 +39,21 @@ uploadFile = st.file_uploader(label="🥘Upload image", type=['jpg', 'png'])
 
 # Checking the Format of the page
 if uploadFile is not None:
+    
     # Perform  Manipulations 
     img = load_resize_image(uploadFile)
     st.image(img)
+
     # st.write(img)
     st.write("📸 Image Uploaded Successfully !")
     st.write("🧠Wait a minute, FRITZ is identifying the recipe")
 
     # Reshape the image
-    
     X = img.reshape(img.shape[0]*img.shape[1]*img.shape[2])
     X=X.tolist()
     X_json=json.dumps(X)
     
     # Call the POST
-    # url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
-    # url_local="http://127.0.0.1:8000/predict"
-
-    
-    
-    
     data=json.dumps({"image_reshape":X_json,
                      "height": img.shape[0],
                      "width": img.shape[1],
@@ -68,6 +63,7 @@ if uploadFile is not None:
     response = requests.post(url,data,headers=headers).json()
     response = response.replace("_", " ")
     st.write(f"FRITZ thinks the recipe is a **{response}**")
+    
     st.write("🦑FRITZ is finding the ingredients")
     # st.write(getingredients(response))
 
@@ -78,6 +74,7 @@ if uploadFile is not None:
     # st.write(fill_empties(output_dict))
     final_df, missing_ingredients=match_ingredients(output_df)
     st.write(final_df, missing_ingredients)
+    st.write(convert(final_df))
     final_result=convert(final_df)["calculated gCO2e"].sum()
     st.write(f"1 portion of this {response} emits {final_result} grams of C02")
 
