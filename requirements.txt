@@ -1,7 +1,10 @@
 streamlit
 nltk
 Pillow
-pandas
-numpy
 requests
 collection
+tensorflow==2.6
+keras==2.6
+numpy==1.19.2
+pandas==1.3.4
+pylint==2.10.2
