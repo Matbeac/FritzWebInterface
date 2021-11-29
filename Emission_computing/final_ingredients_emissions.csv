@@ -6,7 +6,7 @@ anchovy,4220
 apple juice,2440
 apple sauce,2146
 applesauce,2146
-apples,900
+apple,900
 apricot,430
 artichoke,338
 asparagus,7032
@@ -31,8 +31,11 @@ standing rib roast,43330
 beer,876
 beetroot,1136
 berries,2860
+blueberries,2860
 biscuits,1303
+vanilla wafers,1303
 black beans,852
+pinto beans,852
 black pepper,1133
 red pepper,1133
 black tea,605
@@ -48,11 +51,13 @@ brussels sprouts,750
 buckwheat,718
 bulgar,760
 butter,9758
+ghee,9868
 buttermilk,1100
 cabbage,622
 cabbage - pickled,2569
 cacao nibs,2655
 cacao powder,4440
+unsweetened cocoa powder,4440
 carrot,1133
 cashew nuts,2091
 cassava starch,594
@@ -62,6 +67,7 @@ celery,844
 cheese,8787
 brie,7417
 camambert,7111
+camembert,7111
 cheddar,7417
 cottage,2445
 cream cheese,6440
@@ -71,6 +77,7 @@ emmental,7111
 feta,7111
 goats,7111
 gouda,7417
+gruyère,8787
 mascarpone,7417
 paneer,7111
 parmesan,7111
@@ -91,6 +98,7 @@ chilli pepper,2019
 chilli powder,1133
 chile powder,1133
 chile paste,1535
+chipotle paste,1535
 chips,3822
 chives,1133
 chocolate,5763
@@ -109,6 +117,7 @@ coconut oil,2415
 coconut sugar,656
 cod,3214
 coffee beans,4500
+coffee liqueur,2320
 coley,4362
 coriander,1133
 cilantro,1133
@@ -116,7 +125,8 @@ corn,405
 corn crisps,1325
 corn oil,1199
 cornstarch,891
-cornflour,891
+cornflour,1034
+cornmeal,1034
 tacos,1081
 cottonseed oil,2140
 courgette,861
@@ -126,12 +136,14 @@ crackers,1155
 cranberries,2860
 crayfish,17746
 cream,3724
+whipped cream,3724
 cream - plant-based,1873
 crepe,711
 crisps,4410
 crumpet,1215
 cucumber,1928
-cucumber - pickled,4074
+cornichon,4074
+
 cumin,1133
 currants,2100
 custard,2454
@@ -141,14 +153,14 @@ donut,6579
 dried peas (shelled),2388
 duck,5054
 eel,4220
-eggs,4506
+egg,4506
 espresso,706
 faba beans,852
 falafel,2510
 fennel seeds,4200
+ajwain,4200
 fish sauce,222
 fish sticks,1906
-fisherman pie,7778
 five spice,1133
 flapjacks,6840
 flat white,1613
@@ -301,7 +313,8 @@ passata,1959
 pasta,1374
 cheese ravioli,4534
 pastry,6579
-wrappers,4138
+double pie crust,6579
+wrapper,4138
 dough,6579
 peaches,1900
 peaches - canned,2900
@@ -312,9 +325,8 @@ pears,1028
 peas,4228
 pecan,2129
 peppermint extract,656
-peppers,2019
-peppers - green,2019
-peppers - pickled,3840
+pepper,2019
+pepper - pickled,3840
 pesto,2526
 pineapple juice,2523
 pineapples,1700
@@ -331,6 +343,8 @@ pollock,3214
 pork,6628
 porridge,3958
 potatoes,1273
+potato,1273
+french fry,1273
 gnocchi,1273
 prawn,17746
 pumpkin seeds,4200
@@ -372,7 +386,6 @@ seabass,4362
 seaweed,3036
 sesameseed oil,4200
 shallot,1051
-shepherds pie - ready meal,12222
 sherry,1369
 shrimp,17746
 snack bar - chocolate,5070
@@ -397,7 +410,7 @@ steak,43330
 stir fry sauce,222
 stock,222
 dashi,222
-strawberries,2243
+strawberry,2243
 strawerries - frozen,2334
 sugar,656
 sunflower oil,2545
@@ -420,7 +433,9 @@ tempeh,1093
 tequila,2320
 thyme,1133
 toffee,2412
-tomatoes,2905
+tofu,3160
+tomatoe,2905
+tomato,2095
 tomato pureé,4749
 tortilla,1081
 treacle,656
@@ -440,6 +455,7 @@ walnut,2129
 watercress,1609
 wheat,718
 whiskey,2320
+bourbon,2320
 whiting,4362
 wine,1369
 sauvignon blanc,1369
@@ -451,3 +467,4 @@ escargot,732
 yeast,0
 yuzu,1100
 tabasco sauce,222
+waffles,2446
