@@ -10,18 +10,19 @@ from Emission_computing.emission_preprocessing import *
 from Edamam_api import *
 import nltk
 from nltk.stem import WordNetLemmatizer 
+import base64
 
 nltk.download('wordnet')
 
 # Function to Read and Convert Images
 def load_resize_image(img):
     im = Image.open(img)
-    image = im.resize((224,224)) 
-    image = np.array(image)
+    # image = im.resize((224,224)) 
+    image = np.array(im)
     return image
 
-url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
-# url="http://127.0.0.1:8000/predict"
+# url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
+url="http://127.0.0.1:8000/predict"
 
 # CACHE :Loading the model
 response = requests.get(url).json()
@@ -40,8 +41,14 @@ uploadFile = st.file_uploader(label="🥘Upload image", type=['jpg', 'png'])
 # Checking the Format of the page
 if uploadFile is not None:
     
-    # Perform  Manipulations 
+    # To send to API
     img = load_resize_image(uploadFile)
+    image_coded = img.astype('uint8')
+    height, width, channel = img.shape 
+    img_reshape = image_coded.reshape(height*width*channel)
+    img_enc = base64.b64encode(img_reshape)
+    
+    #Print image
     st.image(img)
 
     # st.write(img)
@@ -49,18 +56,18 @@ if uploadFile is not None:
     st.write("🧠Wait a minute, FRITZ is identifying the recipe")
 
     # Reshape the image
-    X = img.reshape(img.shape[0]*img.shape[1]*img.shape[2])
-    X=X.tolist()
-    X_json=json.dumps(X)
+    # X = img.reshape(img.shape[0]*img.shape[1]*img.shape[2])
+    # X=X.tolist()
+    # X_json=json.dumps(X)
     
     # Call the POST
-    data=json.dumps({"image_reshape":X_json,
-                     "height": img.shape[0],
-                     "width": img.shape[1],
-                     "color": img.shape[2]})
+    data={"image_reshape":img_enc.decode('utf8').replace("'", '"'),
+                     "height": height,
+                     "width": width,
+                     "color": channel}
     headers = {'Content-type': 'application/json'}
-    
-    response = requests.post(url,data,headers=headers).json()
+    response = requests.post(url,json.dumps(data),headers=headers).json()
+    st.write(response)
     response = response.replace("_", " ")
     st.write(f"FRITZ thinks the recipe is a **{response}**")
     
