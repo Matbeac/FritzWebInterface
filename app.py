@@ -50,7 +50,7 @@ st.markdown("""
 st.markdown("""Did you know that you **save more water** by **not eating** a steak than you would by **not showering** for **one month** ?""")
 
 # Uploading the Image to the Page
-uploadFile = st.file_uploader(label="🥘Upload image", type=['jpg', 'png'])
+uploadFile = st.file_uploader(label="🥘Upload image", type=['jpeg', 'png','jpg','JPEG','JPG','PNG'])
 
 # Checking the Format of the page
 if uploadFile is not None:
@@ -98,10 +98,10 @@ if uploadFile is not None:
     # Try packaging
     output_dict=getingredients(recipe)
     output_df=fill_empties(output_dict)
-    st.write(fill_empties(output_dict))
+    # st.write(fill_empties(output_dict))
     final_df, missing_ingredients=match_ingredients(output_df)
-    st.write(final_df, missing_ingredients)
-    st.write(convert(final_df))
+    # st.write(final_df, missing_ingredients)
+    # st.write(convert(final_df))
     final_result=convert(final_df)["calculated gCO2e"].sum()
     st.write(f"1 portion of this {recipe} emits {final_result} grams of C02")
 
