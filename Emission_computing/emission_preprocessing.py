@@ -19,7 +19,7 @@ def fill_empties(output_dict):
     output_df=pd.DataFrame(output_dict)
     output_df.metric=output_df.metric.astype(str)
     for item in missing_values:
-        output_df.metric.replace(item, "g", inplace=True)
+        output_df.metric.replace(item, "gram", inplace=True)
     return output_df
 print('OK Step 1')
 
