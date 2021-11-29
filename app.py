@@ -41,7 +41,6 @@ def load_resize_image(img):
 # # url="http://127.0.0.1:8000/predict"
 
 # CACHE :Loading the model
-response = requests.get(url).json()
 # Title
 st.markdown("""
     # 🥙 FRITZ
