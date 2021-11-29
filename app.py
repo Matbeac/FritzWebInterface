@@ -21,8 +21,8 @@ def load_resize_image(img):
     image = np.array(im)
     return image
 
-# url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
-url="http://127.0.0.1:8000/predict"
+url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
+# url="http://127.0.0.1:8000/predict"
 
 # CACHE :Loading the model
 response = requests.get(url).json()
