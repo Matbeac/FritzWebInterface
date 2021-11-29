@@ -4,7 +4,7 @@ import collections
 from Recipe_API.keys import *
 
 # key API
-api_key = get_api_key()
+api_key = get_edamam_key()
 
 def recipes_call(dish, food_type, results_number=20):
 
