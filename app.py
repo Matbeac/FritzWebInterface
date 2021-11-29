@@ -18,6 +18,12 @@ def load_resize_image(img):
     image = np.array(image)
     return image
 
+url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
+# url="http://127.0.0.1:8000/predict"
+
+# Loading the model
+response = requests.get(url).json()
+st.write('model loaded')
 # Title
 st.markdown("""
     # 🥙 FRITZ
@@ -45,7 +51,9 @@ if uploadFile is not None:
     X_json=json.dumps(X)
     
     # Call the POST
-    url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
+    # url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
+    # url_local="http://127.0.0.1:8000/predict"
+
     
     
     
@@ -67,7 +75,7 @@ if uploadFile is not None:
     output_df=fill_empties(output_dict)
     # st.write(fill_empties(output_dict))
     final_df, missing_ingredients=match_ingredients(output_df)
-    # st.write(final_df, missing_ingredients)
+    st.write(final_df, missing_ingredients)
     final_result=convert(final_df)["calculated gCO2e"].sum()
     st.write(f"1 portion of this {response} emits {final_result} grams of C02")
 
