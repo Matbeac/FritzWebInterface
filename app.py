@@ -62,11 +62,18 @@ if uploadFile is not None:
     
     img = load_resize_image(uploadFile)
     response_reshape = resize(img,[224, 224])
-
-    probabilities=model.predict(np.array([response_reshape/255]))
+    #--------------------------------------------
+    # V. MODEL PREDICTION
+    #--------------------------------------------
     
+    # Getting the output
+    probabilities=model.predict(np.array([response_reshape/255]))
     ## output = 100 probabilities for each class = [0.45,0.56,0.44 etc.]
     index=np.argmax(probabilities)
+    
+    # Getting the class
+    recipe = load_classes(classes_path,index)
+
 
     recipe = recipe.replace("_", " ")
     st.write(f"FRITZ thinks the recipe is a **{recipe}**")
@@ -76,10 +83,10 @@ if uploadFile is not None:
     #--------------------------------------------
     # VII. DATA ENGINEERING
     #--------------------------------------------
-    ## Filling the NaNs
+    ## Converting the output to a df 
     output_dict=getingredients(recipe)
-    output_df=fill_empties(output_dict)
-    st.write(fill_empties(output_dict))
+    output_df=pd.DataFrame(output_dict)
+    st.write(output_df)
     
     ## Matching the ingredients with final_ingredients_emissions.csv
     final_df, missing_ingredients=match_ingredients(output_df)
