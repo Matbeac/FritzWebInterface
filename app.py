@@ -61,6 +61,7 @@ with col1:
 #--------------------------------------------
 # IV. IMAGE UPLOAD
 #--------------------------------------------
+
 with col2:
 
     uploadFile = st.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
