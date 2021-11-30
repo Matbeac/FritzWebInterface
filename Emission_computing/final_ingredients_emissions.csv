@@ -17,8 +17,7 @@ bacon,6628
 bagel,1215
 baguette,1301
 baked beans,2467
-baking soda,0
-bananas,1300
+banana,1300
 barbeque sauce,222
 barley,1118
 basil,1133
@@ -38,7 +37,6 @@ black beans,852
 pinto beans,852
 black pepper,1133
 red pepper,1133
-black tea,605
 brandy,2320
 bread,1215
 loaf,1215
@@ -75,7 +73,7 @@ cream cheese frosting,6440
 edam,7111
 emmental,7111
 feta,7111
-goats,7111
+goat cheese,7111
 gouda,7417
 gruyère,8787
 mascarpone,7417
@@ -102,9 +100,7 @@ chipotle paste,1535
 chips,3822
 chives,1133
 chocolate,5763
-chocolate biscuit,2700
-chocolate chips,5763
-chocolate spread,4388
+bittersweet chocolate chips,5763
 chutney,1656
 cider bottle,876
 cider can,660
@@ -137,7 +133,6 @@ cranberries,2860
 crayfish,17746
 cream,3724
 whipped cream,3724
-cream - plant-based,1873
 crepe,711
 crisps,4410
 crumpet,1215
@@ -172,7 +167,6 @@ frozen pulses,1834
 fruit cordial,1927
 fruit juice,1711
 pie filling,1578
-fruit tea,605
 fudge,2412
 gammon,6628
 garam masala,1133
@@ -188,8 +182,6 @@ grapefruits,800
 grapes,2300
 gravy,222
 green beans,5668
-green tea,605
-groundnut oil,900
 guinea fowl,5054
 haddock,4362
 hake,4362
@@ -199,8 +191,6 @@ spam,6628
 haricot beans,852
 hazelnut paste,1266
 hazelnut spread,2710
-hazelnuts - chocolate covered,3430
-herbal tea,605
 herbs and spices,1133
 herring,1586
 hoki,4362
@@ -210,7 +200,7 @@ hummus,852
 ice cream,3802
 instant coffee,706
 jam,2146
-jasmin tea,605
+tea,605
 kale,1609
 kidney beans,852
 kipper,4220
@@ -241,18 +231,12 @@ marmite,1660
 marshmallows,2412
 marzipan,1657
 mayonnaise,4030
-meatless,2290
-melons,900
-milk,1762
+melon,900
+milk,2453
 buffalo milk,3380
 condensed milk,3100
 dulce de leche,3100
-goats milk,2670
-plant milk-based,545
-sheeps milk,8400
-soy milk,782
 mint,1133
-mints,2412
 mirin,222
 hoisin sauce,222
 miso paste,222
@@ -289,10 +273,8 @@ oatly oat drink - vanilla organic,350
 oats,785
 octopus,3036
 olive oil,2526
-olives,463
+olive,463
 onion,1051
-onion - frozen,2308
-onion - pickled,2543
 orange juice,2000
 oranges,1900
 oregano,1133
@@ -316,7 +298,6 @@ double pie crust,6579
 wrapper,4138
 dough,6579
 peaches,1900
-peaches - canned,2900
 peanut,1360
 peanut butter,2107
 peanut oil,3637
@@ -325,11 +306,9 @@ peas,428
 pecan,2129
 peppermint extract,656
 pepper,2019
-pepper - pickled,3840
 pesto,2526
-pineapple juice,2523
-pineapples,1700
-pineapples - dried,4900
+pineapples,170
+pineapple juice,25230
 pistachio,2330
 pitta bread,1215
 plaice,4362
@@ -340,6 +319,7 @@ polenta,760
 grits,760
 pollock,3214
 pork,6628
+pork mince,6628
 porridge,3958
 potatoes,1273
 potato,1273
@@ -348,14 +328,6 @@ gnocchi,1273
 prawn,17746
 pumpkin seeds,4200
 quinoa,816
-quorn,2400
-quorn classic burger,2550
-quorn crispy nuggets,1967
-quorn mince,1691
-quorn pieces,1709
-quorn sausages,1700
-quorn vegan nuggets,2550
-quorn vegan pieces,1600
 rabbit,11019
 raisins,2100
 rapeseed oil,2404
@@ -387,9 +359,6 @@ sesameseed oil,4200
 shallot,1051
 sherry,1369
 shrimp,17746
-snack bar - chocolate,5070
-snack bar - muesli,6840
-soft drink,622
 soy sauce,222
 shoyu,222
 soybean oil,1583
@@ -398,10 +367,8 @@ edamame,2000
 spagheti bolognese - ready meal,11667
 spaghetti,1374
 spinach,1457
-spinach - canned,1787
-spinach - frozen,1571
 spring onion,1051
-scallions,1051
+scallion,1051
 squash,1162
 squid,3036
 calamari,3036
@@ -417,17 +384,12 @@ sunflower seeds,848
 swedes,678
 sweet potato,1273
 sweetcorn - canned,2605
-sweetcorn - frozen,2524
 sweetcorn - on the cob,1576
-sweetcorn - packaged,2406
-sweets,2412
-sweets - milk-based,4210
 tagliatelle,1374
 tahini,852
 tamari,222
 tarragon,1374
 tapioca starch,594
-tea - with milk,631
 tempeh,1093
 tequila,2320
 thyme,1133
@@ -479,53 +441,31 @@ pork chop,6628
 baby back ribs,43330
 smoked paprika,1133
 beef tenderloin,43330
+beef mince,43330
 dijon mustard,222
 egg yolk,4506
 russet potatoes,1273
 all purpose flour,891
-chicken stock,9870
 galangal,1133
-unsalted butter,9758
-grated nutmeg,1133
 toasted sesame oil,4200
-fresh ginger,452
 duckling,5054
 granny smith,900
 yukon gold,1273
 zucchini,861
 safflower oil,2545
-pitted black olives,463
-light brown sugar,656
 shoulder roast,43330
 hot dog buns,1215
 balsamic vinegar,222
-heavy cream,3724
-powdered sugar,656
-bittersweet chocolate,5763
 ricotta,6440
 cannoli shells,6579
-brown sugar,656
-green onions,1051
 andouille sausage,6628
-fresh tarragon,1374
-whole milk,1762
-fresh basil,1133
 parsely,1133
-mozzarella cheese,8787
-grapeseed oil,2404
 ramen noodles 1374
 cooked chicken breast,9870
 powdered sugar,656
 bittersweet chocolate,5763
 ricotta,6440
 cannoli shells,6579
-brown sugar,656
-green onions,1051
-andouille sausage,6628
-fresh tarragon,1374
-whole milk,1762
-fresh basil,1133
-parsely,1133
 mozzarella cheese,8787
 grapeseed oil,2404
 ramen noodles 1374
@@ -538,14 +478,11 @@ monterey jack,8787
 sourdough,6579
 filet mignon,43330
 cognac,2320
-beef broth,43330
+beef broth,1085
 pecorino romano,8787
-lasagna noodles,1374
-portobello mushrooms,1405
 crabmeat,17746
 old bay seasoning,1133
 tomato purée,4749
-confectioners' sugar,656
 nori,3036
 harissa,1535
 ketchup,222
