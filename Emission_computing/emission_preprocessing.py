@@ -26,29 +26,44 @@ print('OK Step 1')
 
 # 2. Name matching using regex for all ingredients
 def match_ingredients(output_df):
-    final_dict={'ingredient':[], 'emission':[]}
+    final_dict={'ingredient':[], 'emission':[],'value':[],'metric':[]}
     missing_ingredients={'missing_ingredients':[]}
+    
     for ingredient in output_df['ingredient']:
+        
         # 1. Lemmatize 
         ingredient_words=re.split('\s+', ingredient)
         lemmatizer = WordNetLemmatizer()
         lemmatized_output = ' '.join([lemmatizer.lemmatize(w) for w in ingredient_words])
+        ingredient_words=re.split('\s+', lemmatized_output)
         
         # 2. Try the whole lemmatized sentence
         if df[df['ingredient'].str.match(r'.*'+str(lemmatized_output)+'.*')== True].ingredient.values.size>0:
                 final_dict['ingredient'].append(df[df['ingredient'].str.match(r'.*'+str(lemmatized_output)+'.*')== True].ingredient.values[0])
                 final_dict['emission'].append(df[df['ingredient'].str.match(r'.*'+str(lemmatized_output)+'.*')== True].emissions.values[0])
+                final_dict['value'].append(output_df[output_df["ingredient"]==ingredient].value.iloc[0])
+                final_dict['metric'].append(output_df[output_df["ingredient"]==ingredient].metric.iloc[0])
+        # False
         
         # 3. If the lemmatized output does not work, try the words
         else:
             for word in ingredient_words:
+                # "ground" 
+                # "beef"
                 try:
                     final_dict['ingredient'].append(df[df['ingredient'].str.match(r'.*'+str(word)+'.*')== True].ingredient.values[0])
                     final_dict['emission'].append(df[df['ingredient'].str.match(r'.*'+str(word)+'.*')== True].emissions.values[0])
+                    final_dict['value'].append(output_df[output_df["ingredient"]==ingredient].value.iloc[0])
+                    final_dict['metric'].append(output_df[output_df["ingredient"]==ingredient].metric.iloc[0])                    
                 except IndexError:
                     missing_ingredients['missing_ingredients'].append(ingredient)
             
+#     final_df=pd.DataFrame.from_dict(final_dict)
+#     # Adding the columns "value" and metric from output_dict
+#     final_df=final_df.merge(output_df,on="ingredient")
     final_df=pd.DataFrame(final_dict)
+
+    return final_df,missing_ingredients
     
     
     # Adding the columns "value" and metric from output_dict
