@@ -41,7 +41,7 @@ def match_ingredients(output_df):
         
         # 3. If the lemmatized output does not work, try the words
         else:
-            for word in lemmatized_output:
+            for word in ingredient_words:
                 try:
                     final_dict['ingredient'].append(df[df['ingredient'].str.match(r'.*'+str(word)+'.*')== True].ingredient.values[0])
                     final_dict['emission'].append(df[df['ingredient'].str.match(r'.*'+str(word)+'.*')== True].emissions.values[0])
