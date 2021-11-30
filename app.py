@@ -15,10 +15,9 @@ from tensorflow.image import resize
 nltk.download('wordnet')
 
 st.set_page_config(
-            page_title="fritz", # => Quick reference - Streamlit
+            page_title="fritz",
             page_icon="🥑",
-            layout="wide", # wide
-            initial_sidebar_state="auto") # collapsed
+            layout="wide")
 #--------------------------------------------
 # I. GETTING MODELS AND CLASSES
 #--------------------------------------------
@@ -60,7 +59,8 @@ col1.image(image,width=250)
 
 uploadFile = col2.file_uploader(label="🥘Upload image", type=['JPEG', 'PNG','JPG'])
 
-col2.markdown("<h1 style='font-family: Trebuchet MS; font-size:25px; text-align: center; color: #2E3333;\
+col2.markdown("<h1 style='font-family: Trebuchet MS; font-size:25px; \
+    text-align: center; color: #2E3333;\
     '>Did you know that you save more water by not eating a steak\
     than you would by not showering for one month?🤔</h1>",
     unsafe_allow_html=True)
