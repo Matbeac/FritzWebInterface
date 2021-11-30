@@ -2,7 +2,6 @@ import requests
 import collections
 from Recipe_API.keys import *
 
-
 api_key = get_edamam_key()
 
 def get_recipe(dish):

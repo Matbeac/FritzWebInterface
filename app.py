@@ -1,14 +1,14 @@
 import PIL
 from PIL import Image
-import numpy as np 
-import streamlit as st 
+import numpy as np
+import streamlit as st
 import json
 from Recipe_API.utils import *
 from Recipe_API.keys import *
 from Emission_computing.emission_preprocessing import *
 from Edamam_api import *
 import nltk
-from nltk.stem import WordNetLemmatizer 
+from nltk.stem import WordNetLemmatizer
 import base64
 from tensorflow import keras,image
 from tensorflow.image import resize
@@ -62,31 +62,15 @@ if uploadFile is not None:
     
     img = load_resize_image(uploadFile)
     response_reshape = resize(img,[224, 224])
-    
-    #--------------------------------------------
-    # V. MODEL PREDICTION 
-    #--------------------------------------------
-    # Getting the output    
+
     probabilities=model.predict(np.array([response_reshape/255]))
     
     ## output = 100 probabilities for each class = [0.45,0.56,0.44 etc.]
     index=np.argmax(probabilities)
-    
-    ## Recipe result = the most probable output
-    recipe = load_classes(classes_path,index)
-    
-    #--------------------------------------------
-    # VI. FRONT END DESIGN OF THE LOADING
-    #--------------------------------------------
-    #Print image
-    st.image(img)
-    st.write("📸 Image Uploaded Successfully !")
-    st.write("🧠Wait a minute, FRITZ is identifying the recipe")
 
-    
     recipe = recipe.replace("_", " ")
     st.write(f"FRITZ thinks the recipe is a **{recipe}**")
-    
+
     st.write("🦑FRITZ is finding the ingredients")
 
     #--------------------------------------------
@@ -108,8 +92,7 @@ if uploadFile is not None:
     st.write(convert(final_df))
     final_result=round(convert(final_df)["calculated gCO2e"].sum())
     st.write(f"1 portion of this {recipe} emits {final_result} grams of C02")
-    
-    ## Equivalents 
+
     miles_per_Kg = round(final_result*0.001*(296/116),2)
     heating_per_Kg = round(final_result*0.001*(29/116),2)
     showers_per_Kg = round((final_result*0.001*(18/116)),2)
@@ -136,9 +119,6 @@ if uploadFile is not None:
 
 
 
-# If the image does not work
+
 else:
     st.write("Make sure you image is in JPEG/JPG/PNG Format.")
-
-
-
