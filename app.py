@@ -56,9 +56,96 @@ col1.image(image,width=250)
 #--------------------------------------------
 # IV. IMAGE UPLOAD
 #--------------------------------------------
+choice = st.radio('Select a possibility', ('upload image', 'upload menu image'))
+if choice == 'upload image':
+    uploadFile = col2.file_uploader(label="🥘Upload image", type=['JPEG', 'PNG','JPG'])
+    if uploadFile is not None:
 
-uploadFile = col2.file_uploader(label="🥘Upload image", type=['JPEG', 'PNG','JPG'])
+        img = load_resize_image(uploadFile)
+        response_reshape = resize(img,[224, 224])
+        #--------------------------------------------
+        # V. MODEL PREDICTION
+        #--------------------------------------------
+        # Getting the output
+        probabilities=model.predict(np.array([response_reshape/255]))
 
+        ## output = 100 probabilities for each class = [0.45,0.56,0.44 etc.]
+        index=np.argmax(probabilities)
+
+        ## Recipe result = the most probable output
+        recipe = load_classes(classes_path,index)
+
+        #--------------------------------------------
+        # VI. FRONT END DESIGN OF THE LOADING
+        #--------------------------------------------
+        #Print image
+        #st.image(img)
+        col3, col4 = st.columns(2)
+        col3.image(img, width=400)
+        col4.markdown("<h1 style='font-family: Trebuchet MS;font-size:20px; text-align: center; color: #2E3333;\
+        '>📸 Image Uploaded Successfully!</h1>",
+        unsafe_allow_html=True)
+        #st.write("🧠Wait a minute, FRITZ is identifying the recipe")
+
+        recipe = recipe.replace("_", " ")
+        #col4.write(f"FRITZ thinks the recipe is a **{recipe}**")
+        col4.markdown(f"<h1 style='font-family: Trebuchet MS;font-size:20px; text-align: center; color: #2E3333;\
+        '>FRITZ thinks the recipe is...</h1>", unsafe_allow_html=True)
+        col4.markdown(f"<h1 style='font-family: Trebuchet MS;font-size:25px; text-align: center; color: #5ea69f;\
+        '>{recipe}</h1>", unsafe_allow_html=True)
+
+        #st.write("🦑FRITZ is finding the ingredients")
+
+
+        #--------------------------------------------
+        # VII. DATA ENGINEERING
+        #--------------------------------------------
+        ## Converting the output to a df
+        output_dict=getingredients(recipe)
+        output_df=pd.DataFrame(output_dict)
+        # st.write(output_df)
+        ## Matching the ingredients with final_ingredients_emissions.csv
+        final_df, missing_ingredients=match_ingredients(output_df)
+        #st.write(final_df)
+        #st.write(missing_ingredients)
+        #st.write(final_df, missing_ingredients)
+
+
+        ## Computing the final emissions
+        #st.write(convert(final_df))
+        final_result=round(convert(final_df)["calculated gCO2e"].sum())
+        #col4.write(f"1 portion of this {recipe} emits {final_result} grams of C02")
+        col4.markdown(f"<h1 style='font-family: Trebuchet MS;font-size:30px; text-align: center; color: #2E3333;\
+        '>1 portion of this {recipe} emits {final_result} grams of C02</h1>", unsafe_allow_html=True)
+        ## Equivalents
+
+        miles_per_Kg = round(final_result*0.001*(296/116),2)
+        heating_per_Kg = round(final_result*0.001*(29/116),2)
+        showers_per_Kg = round((final_result*0.001*(18/116)),2)
+        stream_hrs_kg= round(final_result*0.001*(1/float(55/1000)),2)
+
+        # Columns
+        col5, col6, col7,col8 = st.columns(4)
+        col5.metric("Miles driven 🚗", miles_per_Kg, "-$1.25")
+        col6.metric("Heating 🔥", heating_per_Kg, "0.46%")
+        col7.metric("Showers 🛁 ", showers_per_Kg, "+4.87%")
+        col8.metric("Netflix 📺 ", stream_hrs_kg, "+4.87%")
+        # SUGGESTIONS
+        st.markdown(f"""
+        ## 🍽 How to cut the carbon footprint of your {recipe} ?
+        """)
+        ## Veggie suggestion
+        if output_df[output_df['foodCategory']=="meats"].size>0:
+            # st.write("there is meat")
+            st.markdown(f"""
+            ## 🍃 Moving to a vegetarian {recipe}
+            """)
+
+    else:
+        st.write("Make sure you image is in JPEG/JPG/PNG Format.")
+elif choice == 'upload menu image':
+    uploadFile_2 = col2.file_uploader(label="🥘Upload restaurant menu", type=['JPEG', 'PNG','JPG'])
+    
 col2.markdown("<h1 style='font-family: Trebuchet MS; font-size:25px; \
     text-align: center; color: #2E3333;\
     '>Did you know that you save more water by not eating a steak\
