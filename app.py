@@ -12,6 +12,8 @@ from nltk.stem import WordNetLemmatizer
 import base64
 from tensorflow import keras,image
 from tensorflow.image import resize
+nltk.download('wordnet')
+
 
 @st.cache(allow_output_mutation=True)
 def get_model():
@@ -24,11 +26,9 @@ def load_classes(classes_path,index):
 
 
 model_path="models/100_84_DN121_TL3_GAP.h5"
-# model_path='/home/mateo/code/Matbeac/fritz/models/10_86_7_DN121_AUG_TV_ES5_RLR1_TL2_ES5_RLR1_TL3.h5'
 classes_path= 'models/100_84_DN121_TL3_GAP.csv'
 model=get_model()
 
-nltk.download('wordnet')
 
 # Function to Read and Convert Images
 def load_resize_image(img):
@@ -37,8 +37,6 @@ def load_resize_image(img):
     image = np.array(im)
     return image
 
-# url = "https://fritz-carbon-calc-y3qsfujzsq-uc.a.run.app/predict"
-# # url="http://127.0.0.1:8000/predict"
 
 # CACHE :Loading the model
 # Title
@@ -50,7 +48,7 @@ st.markdown("""
 st.markdown("""Did you know that you **save more water** by **not eating** a steak than you would by **not showering** for **one month** ?""")
 
 # Uploading the Image to the Page
-uploadFile = st.file_uploader(label="🥘Upload image", type=['jpeg', 'png','jpg','JPEG','JPG','PNG'])
+uploadFile = st.file_uploader(label="🥘Upload image", type=['JPEG', 'PNG','JPG'])
 
 # Checking the Format of the page
 if uploadFile is not None:
@@ -59,6 +57,7 @@ if uploadFile is not None:
     
     # Getting the output    
     probabilities=model.predict(np.array([response_reshape/255]))
+    #[0.45,0.56,0.44]
     index=np.argmax(probabilities)
     recipe = load_classes(classes_path,index)
     
@@ -106,8 +105,7 @@ if uploadFile is not None:
     st.write(f"1 portion of this {recipe} emits {final_result} grams of C02")
 
 else:
-    st.write("Make sure you image is in JPG/PNG Format.")
-    
+    st.write("Make sure you image is in JPEG/JPG/PNG Format.")
 
 
 
