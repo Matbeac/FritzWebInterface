@@ -41,8 +41,8 @@ def match_ingredients(output_df):
                 # "ground" 
                 # "beef"
                 try:
-                    final_dict['ingredient'].append(df[df['ingredient'].str.match(r'.*'+str(word)+'.*')== True].ingredient.values[0])
-                    final_dict['emission'].append(df[df['ingredient'].str.match(r'.*'+str(word)+'.*')== True].emissions.values[0])
+                    final_dict['ingredient'].append(df[df['ingredient'].str.match(r'.*'+str(word)+'.*')== True].ingredient.iloc[0])
+                    final_dict['emission'].append(df[df['ingredient'].str.match(r'.*'+str(word)+'.*')== True].emissions.iloc[0])
                     final_dict['weight'].append(output_df[output_df["ingredient"]==ingredient].weight.iloc[0])
 
 #                     final_dict['value'].append(output_df[output_df["ingredient"]==ingredient].value.iloc[0])
