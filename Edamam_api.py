@@ -1,6 +1,6 @@
 import requests
 import collections
-from keys import get_edamam_key
+from Recipe_API.keys import *
 
 
 api_key = get_edamam_key()
