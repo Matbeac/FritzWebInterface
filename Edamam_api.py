@@ -2,7 +2,6 @@ import requests
 import collections
 from Recipe_API.keys import *
 
-
 api_key = get_edamam_key()
 
 def get_recipe(dish):
@@ -26,9 +25,8 @@ def getingredients(dish):
 
     for i in ingredients:
         new_dict["ingredient"].append(i['food'].lower())
-        new_dict["value"].append(round((i['quantity'] / servings), 2))
-        new_dict["metric"].append(i['measure'])
-
+        new_dict["weight"].append(round((i['weight'] / servings), 2))
+        new_dict["foodCategory"].append(i['foodCategory'])
     return new_dict
 if __name__=="__main__":
     print(getingredients("ceviche"))
