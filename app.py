@@ -97,7 +97,7 @@ if uploadFile is not None:
     # Try packaging
     output_dict=getingredients(recipe)
     output_df=fill_empties(output_dict)
-    # st.write(fill_empties(output_dict))
+    st.write(fill_empties(output_dict))
     final_df, missing_ingredients=match_ingredients(output_df)
     st.write(final_df)
     st.write(missing_ingredients)
