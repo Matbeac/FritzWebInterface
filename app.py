@@ -37,6 +37,7 @@ model=get_model()
 def load_resize_image(img):
     im = Image.open(img)
     # image = im.resize((224,224)) 
+    im = im.convert('RGB')
     image = np.array(im)
     return image
 
@@ -113,12 +114,27 @@ if uploadFile is not None:
     heating_per_Kg = round(final_result*0.001*(29/116),2)
     showers_per_Kg = round((final_result*0.001*(18/116)),2)
     stream_hrs_kg= round(final_result*0.001*(1/float(55/1000)),2)
+    
     # Columns
     col1, col2, col3,col4 = st.columns(4)
     col1.metric("🚗Miles driven", miles_per_Kg, "-$1.25")
     col2.metric("Heating", heating_per_Kg, "0.46%")
     col3.metric("Showers", showers_per_Kg, "+4.87%")
     col4.metric("Netflix", stream_hrs_kg, "+4.87%")
+    
+    # SUGGESTIONS
+    st.markdown(f"""
+    ## 🍽 How to cut the carbon footprint of your {recipe} ?
+    """)
+    ## Veggie suggestion
+    if output_df[output_df['foodCategory']=="meats"].size>0:
+        # st.write("there is meat")
+        st.markdown(f"""
+        ## 🍃 Moving to a vegetarian {recipe}
+        """)
+        
+
+
 
 # If the image does not work
 else:

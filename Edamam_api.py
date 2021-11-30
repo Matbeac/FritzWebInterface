@@ -28,7 +28,7 @@ def getingredients(dish):
         new_dict["ingredient"].append(i['food'].lower())
         new_dict["value"].append(round((i['quantity'] / servings), 2))
         new_dict["metric"].append(i['measure'])
-
+        new_dict["foodCategory"].append(i['foodCategory'])
     return new_dict
 if __name__=="__main__":
     print(getingredients("ceviche"))
