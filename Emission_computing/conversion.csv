@@ -1,5 +1,5 @@
 metric,to_Kg_multiplier
-gram,0.001
+gram,0.001,
 milliliter,0.001
 teaspoon,0.005
 tablespoon,0.015
