@@ -13,7 +13,7 @@ import base64
 from tensorflow import keras,image
 from tensorflow.image import resize
 import streamlit.components.v1 as components
-from parse_menu import get_text,parse_menu
+# from parse_menu import get_text,parse_menu
 
 nltk.download('wordnet')
 
