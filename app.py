@@ -182,18 +182,18 @@ if selection == 'Dish':
             st.markdown(f"""
             ## 🍃 Moving to a meat substitute could cut the emissions of your meal by up to 90%!
             """)
-        if output_df[output_df['ingredient']=="cream"].size>0:
+        ## Milk substitute
+        if output_df[output_df['ingredient']=="milk"].size>0:
             # st.write("there is milk")
             st.markdown(f"""
             ## 🐮 Moving to an oat milk from cow's milk could cut it's emission contribution by up to 80%!
             """)
+        ## Butter substitute
         if output_df[output_df['ingredient']=="butter"].size>0:
-            # st.write("there is milk")
+            # st.write("there is butter")
             st.markdown(f"""
             ## 🐄 Moving to a plant based spread from butter could cut it's emission contribution by 2/3!
             """)
-
-
 
         # wrong prediction?
         st.write(" ")
@@ -227,7 +227,7 @@ elif selection == 'Menu':
     if uploadFile is not None:
         menu_image=uploadFile
         menu_text=get_text(menu_image)
-        
+
         #--------------------------------------------
         # VI. DISPLAY THE MOST ECOLOGICAL RECIPE
         #--------------------------------------------
