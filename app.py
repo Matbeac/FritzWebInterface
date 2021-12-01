@@ -66,14 +66,14 @@ if selection == 'Dish':
         portion = st.slider('Select number of portions', 1, 8, 1)
     with col2:
 
-        st.markdown("""
-            <h1 style='font-family: Trebuchet MS; font-size: 15px;
-            text-align: center; color: #2E3333; padding-left: 200px;
-            padding-right: 200px;padding-bottom: 40px;
-            '>Did you know that you save more water by not eating a steak
-            than you would by not showering for one month?🤔</h1>
-            """,
-            unsafe_allow_html=True)
+        # st.markdown("""
+        #     <h1 style='font-family: Trebuchet MS; font-size: 15px;
+        #     text-align: center; color: #2E3333; padding-left: 200px;
+        #     padding-right: 200px;padding-bottom: 40px;
+        #     '>Did you know that you save more water by not eating a steak
+        #     than you would by not showering for one month?🤔</h1>
+        #     """,
+        #     unsafe_allow_html=True)
 
         uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
         st.markdown(
@@ -274,53 +274,54 @@ elif selection == 'Menu':
     if uploadFile is not None:
         menu_image=uploadFile
         menu_text=get_text(menu_image)
-
         #--------------------------------------------
         # VI. DISPLAY THE MOST ECOLOGICAL RECIPE
         #--------------------------------------------
         df_result=parse_menu(menu_text)
-        emission=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,1]
-        recipe_result=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,0].capitalize()
+        try:
+            emission=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,1]
+            recipe_result=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,0].capitalize()
         # st.write(f'The most ecological recipe is {recipe_result}, with a carbon footprint of {emission} g/C02 emitted per kg')
 
-        #--------------------------------------------
-        # VI. FRONT END DESIGN OF THE LOADING
-        #--------------------------------------------
-        #Print image
-        col3, col4 = st.columns([0.5,2])
-        with col3:
-            st.image(menu_image, use_column_width=True)
+            #--------------------------------------------
+            # VI. FRONT END DESIGN OF THE LOADING
+            #--------------------------------------------
+            #Print image
+            col3, col4 = st.columns([0.5,2])
+            with col3:
+                st.image(menu_image, use_column_width=True)
 
-            st.markdown("<h1 style='font-family: Trebuchet MS;font-size:20px; text-align: center; color: #2E3333;\
-                        '>📸 Menu Uploaded Successfully!</h1>",
-                        unsafe_allow_html=True)
+                st.markdown("<h1 style='font-family: Trebuchet MS;font-size:20px; text-align: center; color: #2E3333;\
+                            '>📸 Menu Uploaded Successfully!</h1>",
+                            unsafe_allow_html=True)
 
-        with col4:
+            with col4:
 
-            st.markdown(f"""<h1 style='font-family: Trebuchet MS;font-size:20px;
-                        text-align: center; color:#2E3333;
-        '               >FRITZ thinks the most ecological recipe of this restaurant is...</h1>""",
-                        unsafe_allow_html=True)
-            st.markdown(f"""
-                        <h1 style='font-family: Trebuchet MS;font-size:25px;
-                        text-align: center; color:#5ea69f;
-                        '>{recipe_result}</h1>
-                        """,
-                        unsafe_allow_html=True)
-            components.html(
-                f"""
-                <p style="font-weight:bold;
-                text-align: center;
-                font-family: Trebuchet MS;
-                font-size:25px; color:#2E3333;">
-                with a carbon footprint of
-                <span style="color: #5ea69f; font-size:30px">{emission}</span>
-                g/C02 emitted per kg
-                </p>"""
-            )
-
-            st.markdown(""" Ranking of the most ecological recipes of the restaurant:""")
-            st.dataframe(df_result)
-
-#else:
-    #st.write("Make sure your image is in JPEG/JPG/PNG Format!!")
+                st.markdown(f"""<h1 style='font-family: Trebuchet MS;font-size:20px;
+                            text-align: center; color:#2E3333;
+            '               >FRITZ thinks the most ecological recipe of this restaurant is...</h1>""",
+                            unsafe_allow_html=True)
+                st.markdown(f"""
+                            <h1 style='font-family: Trebuchet MS;font-size:25px;
+                            text-align: center; color:#5ea69f;
+                            '>{recipe_result}</h1>
+                            """,
+                            unsafe_allow_html=True)
+                components.html(
+                    f"""
+                    <p style="font-weight:bold;
+                    text-align: center;
+                    font-family: Trebuchet MS;
+                    font-size:25px; color:#2E3333;">
+                    with a carbon footprint of
+                    <span style="color: #5ea69f; font-size:30px">{emission}</span>
+                    g/C02 emitted per kg
+                    </p>"""
+                )
+                st.markdown(""" Ranking of the most ecological recipes of the restaurant:""")
+                
+                # st.bar_chart(df_result.set_index('Dish'))
+                # st.bar_chart(df_result['g/CO2 emitted/kg'])
+                st.dataframe(df_result.transpose())
+        except:
+            st.write('NOT UNDERSTOOD')
