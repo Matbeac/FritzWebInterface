@@ -13,7 +13,7 @@ import base64
 from tensorflow import keras,image
 from tensorflow.image import resize
 import streamlit.components.v1 as components
-from parse_menu import *
+from parse_menu import get_text,parse_menu
 
 nltk.download('wordnet')
 
@@ -68,6 +68,7 @@ if selection == 'Dish':
             <h1 style='font-family: Trebuchet MS; font-size: 15px;
             text-align: center; color: #2E3333; padding-left: 200px;
             padding-right: 200px;padding-bottom: 40px;
+
             '>Did you know that you save more water by not eating a steak
             than you would by not showering for one month?🤔</h1>
             """,
@@ -96,7 +97,6 @@ if selection == 'Dish':
         # VI. FRONT END DESIGN OF THE LOADING
         #--------------------------------------------
         #Print image
-        #st.image(img)
         col3, col4 = st.columns([0.5,2])
         with col3:
             st.image(img, use_column_width=True)
@@ -192,6 +192,25 @@ if selection == 'Dish':
             st.markdown(f"""
             ## 🐄 Moving to a plant based spread from butter could cut it's emission contribution by 2/3!
             """)
+        if output_df[output_df['ingredient']=="cream"].size>0:
+            # st.write("there is milk")
+            st.markdown(f"""
+            ## 🐮 Moving to an oat milk from cow's milk could cut it's emission contribution by up to 80%!
+            """)
+        if output_df[output_df['ingredient']=="butter"].size>0:
+            # st.write("there is milk")
+            st.markdown(f"""
+            ## 🐄 Moving to a plant based spread from butter could cut it's emission contribution by 2/3!
+            """)
+
+
+
+        # wrong prediction?
+        st.write(" ")
+        st.write(" ")
+        col6 = st.columns(5)
+        if col6[2].button('wrong dish?'):
+            col6[2].write('Top 3 predictions')
 
         # wrong prediction?
         st.write(" ")
@@ -238,7 +257,6 @@ elif selection == 'Menu':
         # VI. FRONT END DESIGN OF THE LOADING
         #--------------------------------------------
         #Print image
-        #st.image(img)
         col3, col4 = st.columns([0.5,2])
         with col3:
             st.image(menu_image, use_column_width=True)
@@ -248,6 +266,7 @@ elif selection == 'Menu':
                         unsafe_allow_html=True)
 
         with col4:
+
             st.markdown(f"""<h1 style='font-family: Trebuchet MS;font-size:20px;
                         text-align: center; color:#2E3333;
         '               >FRITZ thinks the most ecological recipe of this restaurant is...</h1>""",
@@ -272,11 +291,6 @@ elif selection == 'Menu':
 
             st.markdown(""" Ranking of the most ecological recipes of the restaurant:""")
             st.dataframe(df_result.rename(columns={'emission': 'Emission (g/CO2 per kg)'}, index={'ingredient_parsed': 'Dish'}))
-
-
-
-
-
 
 #else:
     #st.write("Make sure your image is in JPEG/JPG/PNG Format!!")
