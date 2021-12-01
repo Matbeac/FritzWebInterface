@@ -1,7 +1,6 @@
 Pillow
 pytesseract==0.3.8
 tesseract==0.1.3
-tesseract-ocr
 streamlit
 nltk
 requests
