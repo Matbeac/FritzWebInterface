@@ -1,5 +1,5 @@
 from PIL import Image
-from pytesseract import pytesseract
+import pytesseract
 import pandas as pd
 import re
 
