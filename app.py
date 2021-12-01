@@ -61,17 +61,20 @@ selection = st.radio('Choose', ('Dish', 'Menu'))
 # IV. IMAGE UPLOAD
 #--------------------------------------------
 if selection == 'Dish':
-    uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
 
     with col2:
 
         st.markdown("""
-            <h1 style='font-family: Trebuchet MS; font-size:25px;
-            text-align: center; color: #2E3333;
+            <h1 style='font-family: Trebuchet MS; font-size: 15px;
+            text-align: center; color: #2E3333; padding-left: 200px;
+            padding-right: 200px;padding-bottom: 40px;
             '>Did you know that you save more water by not eating a steak
             than you would by not showering for one month?🤔</h1>
             """,
             unsafe_allow_html=True)
+
+        uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
+        portion = st.slider('Select number of portions', 1, 8, 1)
 
     if uploadFile is not None:
 
@@ -94,20 +97,19 @@ if selection == 'Dish':
         #--------------------------------------------
         #Print image
         #st.image(img)
-        col3, col4 = st.columns([1,2])
+        col3, col4 = st.columns([0.5,2])
         with col3:
             st.image(img, use_column_width=True)
-
-            st.markdown("<h1 style='font-family: Trebuchet MS;font-size:20px; text-align: center; color: #2E3333;\
-                        '>📸 Image Uploaded Successfully!</h1>",
+            st.markdown("""<h1 style='font-family: Trebuchet MS;font-size:20px;
+                        text-align: center; color: #2E3333;
+                        '>📸 Image Uploaded Successfully!</h1>""",
                         unsafe_allow_html=True)
 
         recipe = recipe.replace("_", " ")
 
         with col4:
-            st.write(" ")
-            st.write(" ")
-            st.markdown(f"""<h1 style='font-family: Trebuchet MS;font-size:20px;
+            st.markdown(f"""<h1 style='font-family: Trebuchet MS;
+                        font-size:20px;
                         text-align: center; color:#2E3333;
         '               >FRITZ thinks the recipe is...</h1>""",
                         unsafe_allow_html=True)
@@ -117,8 +119,6 @@ if selection == 'Dish':
                         '>{recipe}</h1>
                         """,
                         unsafe_allow_html=True)
-
-        #st.write("🦑FRITZ is finding the ingredients")
 
         #--------------------------------------------
         # VII. DATA ENGINEERING
@@ -147,7 +147,7 @@ if selection == 'Dish':
                 font-size:25px; color:#2E3333;">
                 A portion of this {recipe} emits
                 <span style="color: #5ea69f; font-size:30px">{final_result}</span>
-                grams of C02
+                g/C02
                 </p>"""
             )
 
@@ -193,14 +193,12 @@ if selection == 'Dish':
             ## 🐄 Moving to a plant based spread from butter could cut it's emission contribution by 2/3!
             """)
 
-
-
         # wrong prediction?
-        st.write(" ")
         st.write(" ")
         col6 = st.columns(5)
         if col6[2].button('wrong dish?'):
-            col6[2].write('Top 3 predictions')
+            extra_recipes = [load_classes(classes_path, i) for i in reversed(np.argsort(probabilities)[::-1][:2][0][-3:-1])]
+            col6[2].write(extra_recipes)
 
     else:
         #st.write("Make sure you image is in JPEG/JPG/PNG Format.")
@@ -227,7 +225,7 @@ elif selection == 'Menu':
     if uploadFile is not None:
         menu_image=uploadFile
         menu_text=get_text(menu_image)
-        
+
         #--------------------------------------------
         # VI. DISPLAY THE MOST ECOLOGICAL RECIPE
         #--------------------------------------------
@@ -241,7 +239,7 @@ elif selection == 'Menu':
         #--------------------------------------------
         #Print image
         #st.image(img)
-        col3, col4 = st.columns([1,2])
+        col3, col4 = st.columns([0.5,2])
         with col3:
             st.image(menu_image, use_column_width=True)
 
@@ -250,8 +248,6 @@ elif selection == 'Menu':
                         unsafe_allow_html=True)
 
         with col4:
-            st.write(" ")
-            st.write(" ")
             st.markdown(f"""<h1 style='font-family: Trebuchet MS;font-size:20px;
                         text-align: center; color:#2E3333;
         '               >FRITZ thinks the most ecological recipe of this restaurant is...</h1>""",
@@ -259,11 +255,23 @@ elif selection == 'Menu':
             st.markdown(f"""
                         <h1 style='font-family: Trebuchet MS;font-size:25px;
                         text-align: center; color:#5ea69f;
-                        '>{recipe_result}, with a carbon footprint of {emission} g/C02 emitted per kg')</h1>
+                        '>{recipe_result}</h1>
                         """,
                         unsafe_allow_html=True)
+            components.html(
+                f"""
+                <p style="font-weight:bold;
+                text-align: center;
+                font-family: Trebuchet MS;
+                font-size:25px; color:#2E3333;">
+                with a carbon footprint of
+                <span style="color: #5ea69f; font-size:30px">{emission}</span>
+                g/C02 emitted per kg
+                </p>"""
+            )
+
             st.markdown(""" Ranking of the most ecological recipes of the restaurant:""")
-            st.write(df_result.rename(columns={'emission': 'Emission (g/CO2 per kg)'}, index={'ingredient_parsed': 'Dish'}))
+            st.dataframe(df_result.rename(columns={'emission': 'Emission (g/CO2 per kg)'}, index={'ingredient_parsed': 'Dish'}))
 
 
 
