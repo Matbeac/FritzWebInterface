@@ -8,4 +8,5 @@ keras==2.6
 numpy==1.19.2
 pandas==1.3.4
 pylint==2.10.2
-pytesseract
+pytesseract==0.3.8
+tesseract==0.1.3
