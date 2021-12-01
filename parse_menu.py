@@ -44,4 +44,4 @@ def parse_menu(text):
     result["g/CO2 emitted/kg"]=np.floor(result["g/CO2 emitted/kg"])
     
     return result
-    
+

@@ -57,25 +57,34 @@ col1,col2 = st.columns([1,3])
 col1.image(image,width=250)
 selection = st.radio('Choose', ('Dish', 'Menu'))
 
+
 #--------------------------------------------
 # IV. IMAGE UPLOAD
 #--------------------------------------------
 if selection == 'Dish':
-
+    with col1:
+        portion = st.slider('Select number of portions', 1, 8, 1)
     with col2:
 
         st.markdown("""
             <h1 style='font-family: Trebuchet MS; font-size: 15px;
             text-align: center; color: #2E3333; padding-left: 200px;
             padding-right: 200px;padding-bottom: 40px;
-
             '>Did you know that you save more water by not eating a steak
             than you would by not showering for one month?🤔</h1>
             """,
             unsafe_allow_html=True)
 
         uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
-        portion = st.slider('Select number of portions', 1, 8, 1)
+        st.markdown(
+                f"""
+                    <style>
+                        .sidebar .sidebar-content {{
+                            width: 375px;
+                        }}
+                    </style>
+                """,
+                unsafe_allow_html=True)
 
     if uploadFile is not None:
 
@@ -161,56 +170,82 @@ if selection == 'Dish':
         # Columns
         st.write(" ")
         col5 = st.columns(5)
-        col5[1].metric("Miles driven 🚗", miles_per_Kg, "-1.25")
-        col5[2].metric("Heating 🔥", heating_per_Kg, "0.46%")
-        col5[3].metric("Showers 🛁 ", showers_per_Kg, "+4.87%")
-        col5[4].metric("Netflix 📺 ", stream_hrs_kg, "+4.87%")
+        col5[1].metric("Miles driven 🚗", miles_per_Kg)
+        col5[2].metric("House heating 🔥", heating_per_Kg)
+        col5[3].metric("Long Showers 🛁 ", showers_per_Kg)
+        col5[4].metric("Hours streaming Netflix 📺 ", stream_hrs_kg)
 
 
         # SUGGESTIONS
-        
+
         ## Veggie suggestion
+        x = (f"""
+            <h1 style='font-family: Trebuchet MS;
+            font-size:20px; text-align:
+            center; color:#2E3333;
+            '>🍽 How to cut the carbon footprint of your {recipe}?</h1>
+            """)
         if output_df[output_df['foodCategory']=="meats"].size>0:
-            # st.write("there is meat")
+            st.markdown(x,
+            unsafe_allow_html=True)
             st.markdown(f"""
             ## 🍃 Moving to a meat substitute could cut the emissions of your meal by up to 90%!
             """)
+        if output_df[output_df['foodCategory']=="Poultry"].size>0:
+            st.markdown(x,
+            unsafe_allow_html=True)
+            st.markdown(f"""
+            ## 🍃 Moving to a meat substitute could cut the emissions of your meal by up to 60%!
+            """)
         if output_df[output_df['ingredient']=="cream"].size>0:
-            # st.write("there is milk")
+            st.markdown(x,
+            unsafe_allow_html=True)
             st.markdown(f"""
             ## 🐮 Moving to an oat milk from cow's milk could cut it's emission contribution by up to 80%!
             """)
         if output_df[output_df['ingredient']=="butter"].size>0:
-            # st.write("there is milk")
+            st.markdown(x,
+            unsafe_allow_html=True)
             st.markdown(f"""
             ## 🐄 Moving to a plant based spread from butter could cut it's emission contribution by 2/3!
             """)
-        if output_df[output_df['ingredient']=="cream"].size>0:
-            # st.write("there is milk")
-            st.markdown(f"""
-            ## 🐮 Moving to an oat milk from cow's milk could cut it's emission contribution by up to 80%!
-            """)
-        if output_df[output_df['ingredient']=="butter"].size>0:
-            # st.write("there is milk")
-            st.markdown(f"""
-            ## 🐄 Moving to a plant based spread from butter could cut it's emission contribution by 2/3!
-            """)
-
-
-
-        # wrong prediction?
-        st.write(" ")
-        st.write(" ")
-        col6 = st.columns(5)
-        if col6[2].button('wrong dish?'):
-            col6[2].write('Top 3 predictions')
 
         # wrong prediction?
         st.write(" ")
         col6 = st.columns(5)
         if col6[2].button('wrong dish?'):
             extra_recipes = [load_classes(classes_path, i) for i in reversed(np.argsort(probabilities)[::-1][:2][0][-3:-1])]
-            col6[2].write(extra_recipes)
+            recipes = []
+            for _ in range(len(extra_recipes)):
+                recipes.append(extra_recipes[_].replace("_", " "))
+            output_dict_recipe_2=getingredients(recipes[0])
+            output_dict_recipe_3=getingredients(recipes[1])
+            output_df_2=pd.DataFrame(output_dict_recipe_2)
+            output_df_3=pd.DataFrame(output_dict_recipe_3)
+            final_df_2, missing_ingredients_2=match_ingredients(output_df_2)
+            final_df_3, missing_ingredients_2=match_ingredients(output_df_3)
+            final_result_2=round(convert(final_df_2)["calculated gCO2e"].sum())
+            final_result_3=round(convert(final_df_3)["calculated gCO2e"].sum())
+            miles_per_Kg_2 = round(final_result_2*0.001*(296/116),2)
+            heating_per_Kg_2 = round(final_result_2*0.001*(29/116),2)
+            showers_per_Kg_3 = round((final_result_3*0.001*(18/116)),2)
+            stream_hrs_kg_3= round(final_result_3*0.001*(1/float(55/1000)),2)
+
+            col7 = st.columns(2)
+            col7[0].markdown(
+                f"""
+                A portion of this {recipes[0]} emits {final_result_2} g/CO2
+            """
+            )
+            col7[0].markdown(f"Miles driven 🚗 {miles_per_Kg_2}km")
+            col7[0].metric("House heating 🔥", heating_per_Kg_2)
+            col7[1].markdown(
+                f"""
+                A portion of this {recipes[1]} emits {final_result_3} g/CO2
+            """
+            )
+            col7[1].metric("Long Showers 🛁 ", showers_per_Kg_3)
+            col7[1].metric("Hours streaming Netflix 📺 ", stream_hrs_kg_3)
 
     else:
         #st.write("Make sure you image is in JPEG/JPG/PNG Format.")
@@ -222,17 +257,19 @@ if selection == 'Dish':
  #-------------------------------------------#
 
 elif selection == 'Menu':
-    uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
 
     with col2:
 
         st.markdown("""
-            <h1 style='font-family: Trebuchet MS; font-size:25px;
-            text-align: center; color: #2E3333;
+            <h1 style='font-family: Trebuchet MS; font-size: 15px;
+            text-align: center; color: #2E3333; padding-left: 200px;
+            padding-right: 200px;padding-bottom: 40px;
             '>Did you know that you save more water by not eating a steak
             than you would by not showering for one month?🤔</h1>
             """,
             unsafe_allow_html=True)
+
+        uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
 
     if uploadFile is not None:
         menu_image=uploadFile
@@ -243,7 +280,7 @@ elif selection == 'Menu':
         #--------------------------------------------
         df_result=parse_menu(menu_text)
         emission=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,1]
-        recipe_result=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,0].capitalize()  
+        recipe_result=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,0].capitalize()
         # st.write(f'The most ecological recipe is {recipe_result}, with a carbon footprint of {emission} g/C02 emitted per kg')
 
         #--------------------------------------------
@@ -281,5 +318,9 @@ elif selection == 'Menu':
                 g/C02 emitted per kg
                 </p>"""
             )
+
             st.markdown(""" Ranking of the most ecological recipes of the restaurant:""")
             st.dataframe(df_result)
+
+#else:
+    #st.write("Make sure your image is in JPEG/JPG/PNG Format!!")
