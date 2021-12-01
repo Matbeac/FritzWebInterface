@@ -168,14 +168,7 @@ if selection == 'Dish':
 
 
         # SUGGESTIONS
-        st.markdown(f"""
-            <h1 style='font-family: Trebuchet MS;
-            font-size:20px; text-align:
-            center; color:#2E3333;
-            '>🍽 How to cut the carbon footprint of your {recipe}?</h1>
-            """,
-            unsafe_allow_html=True)
-
+        
         ## Veggie suggestion
         if output_df[output_df['foodCategory']=="meats"].size>0:
             # st.write("there is meat")
@@ -249,8 +242,8 @@ elif selection == 'Menu':
         # VI. DISPLAY THE MOST ECOLOGICAL RECIPE
         #--------------------------------------------
         df_result=parse_menu(menu_text)
-        emission=df_result[df_result['emission']==df_result['emission'].min()].iloc[0,0]
-        recipe_result=df_result[df_result['emission']==df_result['emission'].min()].index[0]
+        emission=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,1]
+        recipe_result=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,0].capitalize()  
         # st.write(f'The most ecological recipe is {recipe_result}, with a carbon footprint of {emission} g/C02 emitted per kg')
 
         #--------------------------------------------
@@ -288,9 +281,5 @@ elif selection == 'Menu':
                 g/C02 emitted per kg
                 </p>"""
             )
-
             st.markdown(""" Ranking of the most ecological recipes of the restaurant:""")
-            st.dataframe(df_result.rename(columns={'emission': 'Emission (g/CO2 per kg)'}, index={'ingredient_parsed': 'Dish'}))
-
-#else:
-    #st.write("Make sure your image is in JPEG/JPG/PNG Format!!")
+            st.dataframe(df_result)

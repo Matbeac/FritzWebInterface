@@ -1,6 +1,7 @@
 from PIL import Image
 import pytesseract
 import pandas as pd
+import numpy as np
 import re
 
 def get_text(img):
@@ -11,8 +12,6 @@ def get_text(img):
     return text[:-1]
 
 
-text="STRING TO IMPORT"
-
 ## Getting the whole dataframe
 ingredient_file_path='Emission_computing/final_ingredients_emissions.csv'
 df=pd.read_csv(ingredient_file_path,error_bad_lines=False)
@@ -22,7 +21,7 @@ def parse_menu(text):
 ## Splitting every line
     string_list=[x for x in text.split("\n") if len(x)!=0]
     
-    final_dict={'ingredient_parsed':[],"ingredient_from_df":[], 'emission':[]}
+    final_dict={'Dish':[],"ingredient_from_df":[], 'g/CO2 emitted/kg':[]}
     
     for line in string_list:
         ## Removing the metacharacters and the names
@@ -33,11 +32,16 @@ def parse_menu(text):
         for ingredient in ingredient_words:
             if df[df['ingredient'].str.match(r''+str(ingredient)+'$')==True].ingredient.values.size>0:
                 final_dict['ingredient_from_df'].append(df[df['ingredient'].str.match(r''+str(ingredient)+'$')== True].ingredient.iloc[0])
-                final_dict['emission'].append(df[df['ingredient'].str.match(r''+str(ingredient)+'$')== True].emissions.iloc[0])
-                final_dict["ingredient_parsed"].append(line)
+                final_dict['g/CO2 emitted/kg'].append(df[df['ingredient'].str.match(r''+str(ingredient)+'$')== True].emissions.iloc[0])
+                final_dict["Dish"].append(line)
 
     final_df=pd.DataFrame(final_dict)
-    final_df['ingredient_parsed']=final_df['ingredient_parsed'].astype(str)
-    result=final_df.groupby('ingredient_parsed').sum().sort_values(by="emission",ascending=True)
+    final_df['Dish']=final_df['Dish'].astype(str)
+    final_df['Dish']=final_df['Dish'].str.capitalize()
+    result=final_df.groupby('Dish', as_index=False).sum().sort_values(by="g/CO2 emitted/kg",ascending=True)
+    result=result.reset_index()
+    result=result.drop(columns=['index'])
+    result["g/CO2 emitted/kg"]=np.floor(result["g/CO2 emitted/kg"])
+    
     return result
     
