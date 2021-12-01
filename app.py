@@ -47,7 +47,6 @@ def load_resize_image(img):
     image = np.array(im)
     return image
 
-
 #--------------------------------------------
 # III. FRONT END TITLE
 #--------------------------------------------
@@ -55,40 +54,20 @@ image = Image.open('Recipe_API/fritz.png')
 
 col1,col2 = st.columns([1,3])
 col1.image(image,width=250)
-selection = st.radio('Choose', ('Dish', 'Menu'))
-
+selection = col1.radio("What image do you want to upload?", ("Food", "Restaurant menu"))
 
 #--------------------------------------------
 # IV. IMAGE UPLOAD
 #--------------------------------------------
-if selection == 'Dish':
-    with col1:
-        portion = st.slider('Select number of portions', 1, 8, 1)
-    with col2:
+if selection == "Food":
+    portion = col1.slider('Select number of portions', 1, 8, 1)
 
-        st.markdown("""
-            <h1 style='font-family: Trebuchet MS; font-size: 15px;
-            text-align: center; color: #2E3333; padding-left: 200px;
-            padding-right: 200px;padding-bottom: 40px;
-            '>Did you know that you save more water by not eating a steak
-            than you would by not showering for one month?🤔</h1>
-            """,
-            unsafe_allow_html=True)
-
-        uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
-        st.markdown(
-                f"""
-                    <style>
-                        .sidebar .sidebar-content {{
-                            width: 375px;
-                        }}
-                    </style>
-                """,
-                unsafe_allow_html=True)
+    uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
 
     if uploadFile is not None:
 
         img = load_resize_image(uploadFile)
+        col1.image(img, width=300)
         response_reshape = resize(img,[224, 224])
         #--------------------------------------------
         # V. MODEL PREDICTION
@@ -102,62 +81,42 @@ if selection == 'Dish':
         ## Recipe result = the most probable output
         recipe = load_classes(classes_path,index)
 
-        #--------------------------------------------
-        # VI. FRONT END DESIGN OF THE LOADING
-        #--------------------------------------------
-        #Print image
-        col3, col4 = st.columns([0.5,2])
-        with col3:
-            st.image(img, use_column_width=True)
-            st.markdown("""<h1 style='font-family: Trebuchet MS;font-size:20px;
-                        text-align: center; color: #2E3333;
-                        '>📸 Image Uploaded Successfully!</h1>""",
-                        unsafe_allow_html=True)
-
-        recipe = recipe.replace("_", " ")
-
-        with col4:
-            st.markdown(f"""<h1 style='font-family: Trebuchet MS;
-                        font-size:20px;
-                        text-align: center; color:#2E3333;
-        '               >FRITZ thinks the recipe is...</h1>""",
-                        unsafe_allow_html=True)
-            st.markdown(f"""
-                        <h1 style='font-family: Trebuchet MS;font-size:25px;
-                        text-align: center; color:#5ea69f;
-                        '>{recipe}</h1>
-                        """,
-                        unsafe_allow_html=True)
 
         #--------------------------------------------
-        # VII. DATA ENGINEERING
+        # VII. DATA ENGINEERING & DISPLAY PREDICTION
         #--------------------------------------------
         ## Converting the output to a df
         output_dict=getingredients(recipe)
         output_df=pd.DataFrame(output_dict)
-        #st.write(output_df)
-        ## Matching the ingredients with final_ingredients_emissions.csv
         final_df, missing_ingredients=match_ingredients(output_df)
-        #st.write(final_df)
-        #st.write(missing_ingredients)
-        #st.write(final_df, missing_ingredients)
-
 
         ## Computing the final emissions
-        #st.write(convert(final_df))
+
         final_result=round(convert(final_df)["calculated gCO2e"].sum())
-        #col4.write(f"1 portion of this {recipe} emits {final_result} grams of C02")
-        with col4:
-            components.html(
-                f"""
-                <p style="font-weight:bold;
+
+        with col2:
+
+            components.html(f"""
+                <p style="line-height: 1.6; font-weight: normal;
                 text-align: center;
                 font-family: Trebuchet MS;
                 font-size:25px; color:#2E3333;">
-                A portion of this {recipe} emits
-                <span style="color: #5ea69f; font-size:30px">{final_result}</span>
-                g/C02
-                </p>"""
+                FRITZ thinks the recipe is...<br>
+                <span style="color: #5ea69f; font-size:30px;">{recipe}<br></span>
+
+                </p>
+                """
+            )
+            components.html(f"""
+                <p style="line-height: 1.6; font-weight: normal;
+                text-align: center;
+                font-family: Trebuchet MS;
+                font-size:25px; color:#2E3333;">
+                {portion} portion of this {recipe} emits
+                <span style="color: #5ea69f; font-size:30px;">{final_result}</span>
+                kg/C02
+                </p>
+                """
             )
 
         ## Equivalents
@@ -168,16 +127,36 @@ if selection == 'Dish':
         stream_hrs_kg= round(final_result*0.001*(1/float(55/1000)),2)
 
         # Columns
-        st.write(" ")
-        col5 = st.columns(5)
-        col5[1].metric("Miles driven 🚗", miles_per_Kg)
-        col5[2].metric("House heating 🔥", heating_per_Kg)
-        col5[3].metric("Long Showers 🛁 ", showers_per_Kg)
-        col5[4].metric("Hours streaming Netflix 📺 ", stream_hrs_kg)
+        ##col5 = st.columns(6)
+        with col2:
+            st.markdown(f"""
+                        <h1 style='font-family: Trebuchet MS;font-size:20px;
+                        font-weight: normal;
+                        text-align: center; color: #2E3333;
+                        '>The CO2 emissions from your meal are equivalent to:
+                        </h1>
+                        """,
+                        unsafe_allow_html=True)
+            components.html(f"""
+                <p style="line-height: 1.5; font-weight: normal;
+                text-align: center;
+                font-family: Trebuchet MS;
+                font-size:17px; color:#2E3333;">
+                Driving a car for
+                <span style="color: #5ea69f; font-size:23px;">{miles_per_Kg}</span>
+                miles 🚗 <br>Heating a house 🔥 for
+                <span style="color: #5ea69f; font-size:23px;">{heating_per_Kg}</span>
+                hours <br>Number of long showers🛁
+                <span style="color: #5ea69f; font-size:23px;">{showers_per_Kg}</span>
+                showers <br> Time streaming Netflix 📺
+                <span style="color: #5ea69f; font-size:23px;">{stream_hrs_kg}</span>
+                hours
+                </p>
+                """
+            )
 
 
         # SUGGESTIONS
-
         ## Veggie suggestion
         x = (f"""
             <h1 style='font-family: Trebuchet MS;
@@ -188,64 +167,102 @@ if selection == 'Dish':
         if output_df[output_df['foodCategory']=="meats"].size>0:
             st.markdown(x,
             unsafe_allow_html=True)
-            st.markdown(f"""
-            ## 🍃 Moving to a meat substitute could cut the emissions of your meal by up to 90%!
-            """)
+            components.html(
+                """
+                <p style="font-weight:bold;
+                text-align: center;
+                font-family: Trebuchet MS;
+                font-size:20px; color:#2E3333;">
+                🍃 Moving to a meat substitute could cut the emissions of your meal
+                <span style="color: #5ea69f; font-size:20px">by up to 90%</span>
+                </p>"""
+            )
         if output_df[output_df['foodCategory']=="Poultry"].size>0:
             st.markdown(x,
             unsafe_allow_html=True)
-            st.markdown(f"""
-            ## 🍃 Moving to a meat substitute could cut the emissions of your meal by up to 60%!
-            """)
+            components.html(
+                """
+                <p style="font-weight:bold;
+                text-align: center;
+                font-family: Trebuchet MS;
+                font-size:20px; color:#2E3333;">
+                🍃 Moving to a meat substitute could cut the emissions of your meal
+                <span style="color: #5ea69f; font-size:20px">by up to 60%</span>
+                </p>"""
+            )
         if output_df[output_df['ingredient']=="cream"].size>0:
             st.markdown(x,
             unsafe_allow_html=True)
-            st.markdown(f"""
-            ## 🐮 Moving to an oat milk from cow's milk could cut it's emission contribution by up to 80%!
-            """)
+            components.html(
+                """
+                <p style="font-weight:bold;
+                text-align: center;
+                font-family: Trebuchet MS;
+                font-size:20px; color:#2E3333;">
+                🐮 Moving to an oat milk from cow's milk could cut it's emission contribution
+                <span style="color: #5ea69f; font-size:20px">by up to 80%</span>
+                </p>"""
+            )
         if output_df[output_df['ingredient']=="butter"].size>0:
             st.markdown(x,
             unsafe_allow_html=True)
-            st.markdown(f"""
-            ## 🐄 Moving to a plant based spread from butter could cut it's emission contribution by 2/3!
-            """)
+            components.html(
+                """
+                <p style="font-weight:bold;
+                text-align: center;
+                font-family: Trebuchet MS;
+                font-size:20px; color:#2E3333;">
+               🐄 Moving to a plant based spread from butter could cut it's on contribution
+                <span style="color: #5ea69f; font-size:20px">by 2/3!%</span>
+               </p>""")
 
-        # wrong prediction?
-        st.write(" ")
-        col6 = st.columns(5)
-        if col6[2].button('wrong dish?'):
-            extra_recipes = [load_classes(classes_path, i) for i in reversed(np.argsort(probabilities)[::-1][:2][0][-3:-1])]
-            recipes = []
-            for _ in range(len(extra_recipes)):
-                recipes.append(extra_recipes[_].replace("_", " "))
-            output_dict_recipe_2=getingredients(recipes[0])
-            output_dict_recipe_3=getingredients(recipes[1])
-            output_df_2=pd.DataFrame(output_dict_recipe_2)
-            output_df_3=pd.DataFrame(output_dict_recipe_3)
-            final_df_2, missing_ingredients_2=match_ingredients(output_df_2)
-            final_df_3, missing_ingredients_2=match_ingredients(output_df_3)
-            final_result_2=round(convert(final_df_2)["calculated gCO2e"].sum())
-            final_result_3=round(convert(final_df_3)["calculated gCO2e"].sum())
-            miles_per_Kg_2 = round(final_result_2*0.001*(296/116),2)
-            heating_per_Kg_2 = round(final_result_2*0.001*(29/116),2)
-            showers_per_Kg_3 = round((final_result_3*0.001*(18/116)),2)
-            stream_hrs_kg_3= round(final_result_3*0.001*(1/float(55/1000)),2)
 
-            col7 = st.columns(2)
-            col7[0].markdown(
-                f"""
-                A portion of this {recipes[0]} emits {final_result_2} g/CO2
-            """
-            )
-            col7[0].markdown(f"Miles driven 🚗 {miles_per_Kg_2}km")
-            col7[0].metric("House heating 🔥", heating_per_Kg_2)
-            col7[1].markdown(
-                f"""
-                A portion of this {recipes[1]} emits {final_result_3} g/CO2
-            """
-            )
-            col7[1].metric("Long Showers 🛁 ", showers_per_Kg_3)
-            col7[1].metric("Hours streaming Netflix 📺 ", stream_hrs_kg_3)
+    ## wrong prediction?
+        #st.write(" ")
+        #col6 = st.columns(5)
+        #if col6[2].button('wrong dish?'):
+        #    extra_recipes = [load_classes(classes_path, i) for i in reversed(np.argsort(probabilities)[::-1][:2][0][-3:-1])]
+        #    recipes = []
+        #    for _ in range(len(extra_recipes)):
+        #        recipes.append(extra_recipes[_].replace("_", " "))
+        #    output_dict_recipe_2=getingredients(recipes[0])
+        #    output_dict_recipe_3=getingredients(recipes[1])
+        #    output_df_2=pd.DataFrame(output_dict_recipe_2)
+        #    output_df_3=pd.DataFrame(output_dict_recipe_3)
+        #    final_df_2, missing_ingredients_2=match_ingredients(output_df_2)
+        #    final_df_3, missing_ingredients_2=match_ingredients(output_df_3)
+        #    final_result_2=round(convert(final_df_2)["calculated gCO2e"].sum())
+        #    final_result_3=round(convert(final_df_3)["calculated gCO2e"].sum())
+        #    miles_per_Kg_2 = round(final_result_2*0.001*(296/116),2)
+        #    heating_per_Kg_2 = round(final_result_2*0.001*(29/116),2)
+        #    showers_per_Kg_3 = round((final_result_3*0.001*(18/116)),2)
+        #    stream_hrs_kg_3= round(final_result_3*0.001*(1/float(55/1000)),2)
+
+        #    col7 = st.columns(2)
+        #    with col7[0]:
+        #        components.html( f"""
+        #            <p style="font-weight:bold;
+        #            text-align: center;
+        #            font-family: Trebuchet MS;
+        #            font-size:25px; color:#2E3333;">
+        #            A portion of this
+        #            <span style="color: #5ea69f; font-size:30px">{recipes[0]}</span>
+        #            emits
+        #            <span style="color: #5ea69f; font-size:30px">{final_result_2}</span>
+        #            g/C02
+        #            </p>""")
+        #    with col7[1]:
+        #        components.html( f"""
+        #            <p style="font-weight:bold;
+        #            text-align: center;
+        #            font-family: Trebuchet MS;
+        #            font-size:25px; color:#2E3333;">
+        #            A portion of this
+        #            <span style="color: #5ea69f; font-size:30px">{recipes[1]}</span>
+        #            emits
+        #            <span style="color: #5ea69f; font-size:30px">{final_result_3}</span>
+        #            g/C02
+        #            </p>""")
 
     else:
         #st.write("Make sure you image is in JPEG/JPG/PNG Format.")
@@ -256,19 +273,9 @@ if selection == 'Dish':
  #  MENU OPTION                              #
  #-------------------------------------------#
 
-elif selection == 'Menu':
+elif selection == "Restaurant menu":
 
     with col2:
-
-        st.markdown("""
-            <h1 style='font-family: Trebuchet MS; font-size: 15px;
-            text-align: center; color: #2E3333; padding-left: 200px;
-            padding-right: 200px;padding-bottom: 40px;
-            '>Did you know that you save more water by not eating a steak
-            than you would by not showering for one month?🤔</h1>
-            """,
-            unsafe_allow_html=True)
-
         uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
 
     if uploadFile is not None:
@@ -289,14 +296,10 @@ elif selection == 'Menu':
         #Print image
         col3, col4 = st.columns([0.5,2])
         with col3:
-            st.image(menu_image, use_column_width=True)
-
-            st.markdown("<h1 style='font-family: Trebuchet MS;font-size:20px; text-align: center; color: #2E3333;\
-                        '>📸 Menu Uploaded Successfully!</h1>",
-                        unsafe_allow_html=True)
+            st.write(" ")
 
         with col4:
-
+            st.image(menu_image, use_column_width=True)
             st.markdown(f"""<h1 style='font-family: Trebuchet MS;font-size:20px;
                         text-align: center; color:#2E3333;
         '               >FRITZ thinks the most ecological recipe of this restaurant is...</h1>""",
