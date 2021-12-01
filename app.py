@@ -61,7 +61,6 @@ with col1:
 #--------------------------------------------
 # IV. IMAGE UPLOAD
 #--------------------------------------------
-<<<<<<< HEAD
 choice = st.radio('Select a possibility', ('upload image', 'upload menu image'))
 if choice == 'upload image':
     uploadFile = col2.file_uploader(label="🥘Upload image", type=['JPEG', 'PNG','JPG'])
@@ -151,7 +150,6 @@ if choice == 'upload image':
         st.write("Make sure you image is in JPEG/JPG/PNG Format.")
 elif choice == 'upload menu image':
     uploadFile = col2.file_uploader(label="🥘Upload restaurant menu", type=['JPEG', 'PNG','JPG'])
-=======
 
 with col2:
 
@@ -165,7 +163,6 @@ with col2:
         than you would by not showering for one month?🤔</h1>
         """,
         unsafe_allow_html=True)
->>>>>>> 2cd95a4b1591b74168a4b2f3e103b42638d84eb2
 
 if uploadFile is not None:
 
