@@ -40,13 +40,4 @@ def parse_menu(text):
     final_df['ingredient_parsed']=final_df['ingredient_parsed'].astype(str)
     result=final_df.groupby('ingredient_parsed').sum().sort_values(by="emission",ascending=True)
     return result
-
-if __name__=="__main__":
-    img = r"MS-Online-Menu-Mains-January.jpg"
-    text=get_text(img)
-    result=parse_menu(text)
-    emission=result[result['emission']==result['emission'].min()].iloc[0,0]
-    result=result[result['emission']==result['emission'].min()].index[0]
-    print(f'The most ecological recipe is {result}, with a carbon footprint of {emission} g/C02 emitted per kg')
-    print(parse_menu(text))
     
