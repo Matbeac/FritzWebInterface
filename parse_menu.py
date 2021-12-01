@@ -1,14 +1,14 @@
-# from PIL import Image
-# from pytesseract import pytesseract
-# import pandas as pd
-# import re
+from PIL import Image
+from pytesseract import pytesseract
+import pandas as pd
+import re
 
-# def get_text(img):
-#     # path_to_tesseract = r"tesseract"
-#     img = Image.open(img)
-#     # pytesseract.tesseract_cmd = path_to_tesseract
-#     text = pytesseract.image_to_string(img)
-#     return text[:-1]
+def get_text(img):
+    # path_to_tesseract = r"tesseract"
+    img = Image.open(img)
+    # pytesseract.tesseract_cmd = path_to_tesseract
+    text = pytesseract.image_to_string(img)
+    return text[:-1]
 
 
 text="STRING TO IMPORT"
