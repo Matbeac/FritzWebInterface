@@ -143,8 +143,20 @@ if choice == 'upload image':
         if output_df[output_df['foodCategory']=="meats"].size>0:
             # st.write("there is meat")
             st.markdown(f"""
-            ## 🍃 Moving to a vegetarian {recipe}
+            ## 🍃 Moving to a meat substitute could cut the emissions of your meal by up to 90%!
             """)
+        if output_df[output_df['ingredient']=="cream"].size>0:
+            # st.write("there is milk")
+            st.markdown(f"""
+            ## 🐮 Moving to an oat milk from cow's milk could cut it's emission contribution by up to 80%!
+            """)
+        if output_df[output_df['ingredient']=="butter"].size>0:
+            # st.write("there is milk")
+            st.markdown(f"""
+            ## 🐄 Moving to a plant based spread from butter could cut it's emission contribution by 2/3!
+            """)
+
+
 
     else:
         st.write("Make sure you image is in JPEG/JPG/PNG Format.")
