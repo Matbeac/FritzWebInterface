@@ -21,6 +21,7 @@ st.set_page_config(
             page_title="FRITZ",
             page_icon="🥑",
             layout="wide")
+
 #--------------------------------------------
 # I. GETTING MODELS AND CLASSES
 #--------------------------------------------
@@ -61,8 +62,8 @@ selection = col1.radio("What image do you want to upload?", ("Food", "Restaurant
 #--------------------------------------------
 if selection == "Food":
     portion = col1.slider('Select number of portions', 1, 8, 1)
-
     uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
+
 
     if uploadFile is not None:
 
@@ -92,39 +93,27 @@ if selection == "Food":
 
         ## Computing the final emissions
 
-        final_result=round(convert(final_df)["calculated gCO2e"].sum())
+        final_result=round(convert(final_df)["calculated gCO2e"].sum())*(1/1000)
 
         with col2:
-
-            components.html(f"""
-                <p style="line-height: 1.6; font-weight: normal;
+            components.html(
+                f"""
+                <p style="font-weight:bold;
                 text-align: center;
                 font-family: Trebuchet MS;
                 font-size:25px; color:#2E3333;">
-                FRITZ thinks the recipe is...<br>
-                <span style="color: #5ea69f; font-size:30px;">{recipe}<br></span>
-
-                </p>
-                """
-            )
-            components.html(f"""
-                <p style="line-height: 1.6; font-weight: normal;
-                text-align: center;
-                font-family: Trebuchet MS;
-                font-size:25px; color:#2E3333;">
-                {portion} portion of this {recipe} emits
-                <span style="color: #5ea69f; font-size:30px;">{final_result}</span>
-                kg/C02
-                </p>
-                """
+                {portion} portion(s) of this {recipe} emits
+                <span style="color: #5ea69f; font-size:30px">{final_result*portion}</span>
+                Kg/C02
+                </p>"""
             )
 
         ## Equivalents
 
-        miles_per_Kg = round(final_result*0.001*(296/116),2)
-        heating_per_Kg = round(final_result*0.001*(29/116),2)
-        showers_per_Kg = round((final_result*0.001*(18/116)),2)
-        stream_hrs_kg= round(final_result*0.001*(1/float(55/1000)),2)
+        miles_per_Kg = round(final_result*(296/116)*portion,2)
+        heating_per_Kg = round(final_result*(29/116)*portion,2)
+        showers_per_Kg = round((final_result*(18/116)*portion),2)
+        stream_hrs_kg= round(final_result*(1/float(55/1000))*portion,2)
 
         # Columns
         ##col5 = st.columns(6)
@@ -164,7 +153,9 @@ if selection == "Food":
             center; color:#2E3333;
             '>🍽 How to cut the carbon footprint of your {recipe}?</h1>
             """)
+        # col8 = st.columns(3)
         if output_df[output_df['foodCategory']=="meats"].size>0:
+
             st.markdown(x,
             unsafe_allow_html=True)
             components.html(
@@ -190,6 +181,7 @@ if selection == "Food":
                 <span style="color: #5ea69f; font-size:20px">by up to 60%</span>
                 </p>"""
             )
+
         if output_df[output_df['ingredient']=="cream"].size>0:
             st.markdown(x,
             unsafe_allow_html=True)
@@ -206,6 +198,7 @@ if selection == "Food":
         if output_df[output_df['ingredient']=="butter"].size>0:
             st.markdown(x,
             unsafe_allow_html=True)
+
             components.html(
                 """
                 <p style="font-weight:bold;
@@ -279,15 +272,17 @@ elif selection == "Restaurant menu":
         uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
 
     if uploadFile is not None:
+        st.balloons()
         menu_image=uploadFile
         menu_text=get_text(menu_image)
-
         #--------------------------------------------
         # VI. DISPLAY THE MOST ECOLOGICAL RECIPE
         #--------------------------------------------
         df_result=parse_menu(menu_text)
-        emission=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,1]
-        recipe_result=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,0].capitalize()
+
+        try:
+            emission=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,1]
+            recipe_result=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,0].capitalize()
         # st.write(f'The most ecological recipe is {recipe_result}, with a carbon footprint of {emission} g/C02 emitted per kg')
 
         #--------------------------------------------
@@ -323,7 +318,9 @@ elif selection == "Restaurant menu":
             )
 
             st.markdown(""" Ranking of the most ecological recipes of the restaurant:""")
-            st.dataframe(df_result)
+            # st.bar_chart(df_result.set_index('Dish'))
+            # st.bar_chart(df_result['g/CO2 emitted/kg'])
+            st.dataframe(df_result.transpose())
 
 #else:
     #st.write("Make sure your image is in JPEG/JPG/PNG Format!!")
