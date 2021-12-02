@@ -96,17 +96,28 @@ if selection == "Food":
         final_result=round(convert(final_df)["calculated gCO2e"].sum())*(1/1000)
 
         with col2:
-            components.html(
-                f"""
-                <p style="font-weight:bold;
+
+            components.html(f"""
+                <p style="line-height: 1.6; font-weight: normal;
                 text-align: center;
                 font-family: Trebuchet MS;
                 font-size:25px; color:#2E3333;">
-                {portion} portion(s) of this {recipe} emits
-                <span style="color: #5ea69f; font-size:30px">{final_result*portion}</span>
-                Kg/C02
-                </p>"""
+                FRITZ thinks the recipe is...<br>
+                <span style="color: #5ea69f; font-size:30px;">{recipe}<br></span>
+
+                </p>
+                """
             )
+            components.html(f"""
+                <p style="line-height: 1.6; font-weight: normal;
+                text-align: center;
+                font-family: Trebuchet MS;
+                font-size:25px; color:#2E3333;">
+                {portion} portion of this {recipe} emits
+                <span style="color: #5ea69f; font-size:30px;">{final_result}</span>
+                kg/C02
+                </p>
+                """)
 
         ## Equivalents
 
@@ -280,47 +291,7 @@ elif selection == "Restaurant menu":
         #--------------------------------------------
         df_result=parse_menu(menu_text)
 
-        try:
-            emission=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,1]
-            recipe_result=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,0].capitalize()
-        # st.write(f'The most ecological recipe is {recipe_result}, with a carbon footprint of {emission} g/C02 emitted per kg')
 
-        #--------------------------------------------
-        # VI. FRONT END DESIGN OF THE LOADING
-        #--------------------------------------------
-        #Print image
-        col3, col4 = st.columns([0.5,2])
-        with col3:
-            st.write(" ")
-
-        with col4:
-            st.image(menu_image, use_column_width=True)
-            st.markdown(f"""<h1 style='font-family: Trebuchet MS;font-size:20px;
-                        text-align: center; color:#2E3333;
-        '               >FRITZ thinks the most ecological recipe of this restaurant is...</h1>""",
-                        unsafe_allow_html=True)
-            st.markdown(f"""
-                        <h1 style='font-family: Trebuchet MS;font-size:25px;
-                        text-align: center; color:#5ea69f;
-                        '>{recipe_result}</h1>
-                        """,
-                        unsafe_allow_html=True)
-            components.html(
-                f"""
-                <p style="font-weight:bold;
-                text-align: center;
-                font-family: Trebuchet MS;
-                font-size:25px; color:#2E3333;">
-                with a carbon footprint of
-                <span style="color: #5ea69f; font-size:30px">{emission}</span>
-                g/C02 emitted per kg
-                </p>"""
-            )
-
-            st.markdown(""" Ranking of the most ecological recipes of the restaurant:""")
-            # st.bar_chart(df_result.set_index('Dish'))
-            # st.bar_chart(df_result['g/CO2 emitted/kg'])
-            st.dataframe(df_result.transpose())
 
 #else:
     #st.write("Make sure your image is in JPEG/JPG/PNG Format!!")
