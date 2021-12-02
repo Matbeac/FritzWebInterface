@@ -114,7 +114,7 @@ if selection == "Food":
                 font-size:25px; color:#2E3333;">
                 {portion} portion of this {recipe} emits
                 <span style="color: #5ea69f; font-size:30px;">{round(final_result*portion,1)}</span>
-                kg/C02
+                kg of C02
                 </p>
                 """)
 
@@ -260,7 +260,7 @@ elif selection == 'Restaurant menu':
                 font-size:25px; color:#2E3333;">
                 1 kg of this {recipe_result} emits
                 <span style="color: #5ea69f; font-size:30px;">{round(emission/1000,2)}</span>
-                kg/C02
+                kg of C02
                 </p>
                 """)
                 st.markdown(f"""
