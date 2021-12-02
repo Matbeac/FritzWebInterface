@@ -21,6 +21,7 @@ st.set_page_config(
             page_title="FRITZ",
             page_icon="🥑",
             layout="wide")
+
 #--------------------------------------------
 # I. GETTING MODELS AND CLASSES
 #--------------------------------------------
@@ -272,12 +273,14 @@ elif selection == 'Menu':
         uploadFile = col2.file_uploader(label="Upload image 🌭 ⬇️ ", type=['JPEG', 'PNG','JPG'])
 
     if uploadFile is not None:
+        st.balloons()
         menu_image=uploadFile
         menu_text=get_text(menu_image)
         #--------------------------------------------
         # VI. DISPLAY THE MOST ECOLOGICAL RECIPE
         #--------------------------------------------
         df_result=parse_menu(menu_text)
+        
         try:
             emission=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,1]
             recipe_result=df_result[df_result['g/CO2 emitted/kg']==df_result['g/CO2 emitted/kg'].min()].iloc[0,0].capitalize()
