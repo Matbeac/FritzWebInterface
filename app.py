@@ -3,8 +3,8 @@ from PIL import Image
 import numpy as np
 import streamlit as st
 import json
-from Recipe_API.utils import *
-from Recipe_API.keys import *
+from Utils.utils import *
+from Utils.keys import *
 from Emission_computing.emission_preprocessing import *
 from Edamam_api import *
 import nltk
@@ -51,7 +51,7 @@ def load_resize_image(img):
 #--------------------------------------------
 # III. FRONT END TITLE
 #--------------------------------------------
-image = Image.open('Recipe_API/fritz.png')
+image = Image.open('Utils/fritz.png')
 
 col1,col2 = st.columns([1,3])
 col1.image(image,width=250)
@@ -81,12 +81,13 @@ if selection == "Food":
 
         ## Recipe result = the most probable output
         recipe = load_classes(classes_path,index)
-
+        recipe = recipe.replace("_", " ")
 
         #--------------------------------------------
         # VII. DATA ENGINEERING & DISPLAY PREDICTION
         #--------------------------------------------
         ## Converting the output to a df
+
         output_dict=getingredients(recipe)
         output_df=pd.DataFrame(output_dict)
         final_df, missing_ingredients=match_ingredients(output_df)
