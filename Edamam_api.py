@@ -3,9 +3,8 @@ import collections
 #from Utils.keys import *
 import streamlit as st
 
-#api_key = get_edamam_key()
 
-st.secrets["EDAMAM_KEY"]
+api_key = st.secrets["EDAMAM_KEY"]
 
 def get_recipe(dish):
 
