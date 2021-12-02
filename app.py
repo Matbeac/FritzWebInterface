@@ -130,7 +130,7 @@ if selection == "Food":
         ##col5 = st.columns(6)
         with col2:
             st.markdown(f"""
-                        <h1 style='font-family: Trebuchet MS;font-size:20px;
+                        <h1 style='font-family: Trebuchet MS;font-size:17px;
                         font-weight: normal;
                         text-align: center; color: #2E3333;
                         '>The CO2 emissions from your meal are equivalent to:
